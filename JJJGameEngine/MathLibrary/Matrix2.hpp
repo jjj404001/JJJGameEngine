@@ -51,7 +51,7 @@ brief  :
 
 
 struct Matrix2 {
-    float value[2][2];
+    float value[2][2]{};
 
     //constructors
     Matrix2()
@@ -87,12 +87,10 @@ struct Matrix2 {
 	float* operator[](int column);      //()operator overloading for accessing 2*2 matrix.
 	const float* operator[](int column) const;
     
-    
-    Matrix2 operator*(int multiplier);      //multiplication with integer.
-    Matrix2 operator*(float multiplier);    //multiplication with float.
-
-	Matrix2& operator*=(int multiplier);    //multiplication with integer.
-	Matrix2& operator*=(float multiplier);  //multiplication with float.
+    template<typename Number>
+    Matrix2 operator*(Number multiplier);      //multiplication with integer.
+	template<typename  Number>
+	Matrix2& operator*=(Number multiplier);  //multiplication with float.
 	
 	Vector2 operator*(Vector2 input_vector); //multiplication with vector.
     Vector2 operator*=(Vector2 input_vector); //multiplication with vector.
@@ -100,11 +98,10 @@ struct Matrix2 {
     Matrix2& operator*=(Matrix2 input_matrix); //multiplication with matrix.
 
     Matrix2& transpose(); // transpose given matrix.
-    Matrix2& transpose(Matrix2 input_matrix); // transpose given matrix.
     
 
-    float determinant_of(Matrix2 input_matrix); // calculate determinant of given matrix.
-    Matrix2 inverse_of(Matrix2 input_matrix); // calculate inverse of given matrix.
+    float determinant(); // calculate determinant of given matrix.
+    Matrix2 inverse(); // calculate inverse of given matrix.
 
 
 	Matrix2 operator*(Matrix2 second_input_matrix); //multiplication with matrix.

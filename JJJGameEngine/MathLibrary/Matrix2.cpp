@@ -79,93 +79,33 @@ const float* Matrix2::operator[](int column) const
 //* operator overloading for multiplication with 2*2 matrix.
 
 
-//multiplication with integer.
-Matrix2 Matrix2::operator*(int multiplier)
+template<typename Number>
+Matrix2 Matrix2::operator*(Number multiplier)
 {
-	int i = 0, j = 0; //variables for loop.
-	
-	
-	for(i = 0; i < 2;i++)
+	for(auto i = 0; i < 2;i++)
 	{
-		for(j = 0; j < 2; j++)
+		for(auto j = 0; j < 2; j++)
 		{
 			value[i][j] *= multiplier;
 		}
-		
-		j = 0;
 	}
-	
-    //simply multiply each element of matrix with given integer.
-
 	//return calculated matrix.
     return *this;
 }
 
-//multiplication with float.
-Matrix2 Matrix2::operator*(float multiplier)
+template<typename Number>
+Matrix2& Matrix2::operator*=(Number multiplier)
 {
-	int i = 0, j = 0; //variables for loop.
-	
-	
-	for(i = 0; i < 2;i++)
+	for(auto i = 0; i < 2;i++)
 	{
-		for(j = 0; j < 2; j++)
+		for(auto j = 0; j < 2; j++)
 		{
 			value[i][j] *= multiplier;
 		}
-		
-		j = 0;
 	}
 	
-    //simply multiply each element of matrix with given float.
-
-	//return calculated matrix.
-    return *this;
-}
-
-//multiplication with integer.
-Matrix2& Matrix2::operator*=(int multiplier)
-{
-	int i = 0, j = 0; //variables for loop.
-	
-	
-	for(i = 0; i < 2;i++)
-	{
-		for(j = 0; j < 2; j++)
-		{
-			value[i][j] *= multiplier;
-		}
-		
-		j = 0;
-	}
-	
-	//simply multiply each element of matrix with given integer.
-
-
 	//return calculated matrix.
 	return *this;
-}
-
-//multiplication with float.
-Matrix2& Matrix2::operator*=(float multiplier)
-{
-	int i = 0, j = 0; //variables for loop.
-	
-	
-	for(i = 0; i < 2;i++)
-	{
-		for(j = 0; j < 2; j++)
-		{
-			value[i][j] *= multiplier;
-		}
-		
-		j = 0;
-	}
-	
-	//simply multiply each element of matrix with given float.
-
-	//return calculated matrix.
-	return *this;	
 }
 
 //multiplication with vector.
@@ -229,11 +169,9 @@ Matrix2& Matrix2::operator*=(Matrix2 inputMatrix)
 
 //transpose vector.
 //for convenient use.
-Matrix2& Matrix2::transpose(void)
+Matrix2& Matrix2::transpose()
 {
-    float temporaryMemory; // for storing elements of given matrix.
-
-    temporaryMemory = value[0][1];
+	const auto temporaryMemory = value[0][1];
     value[0][1] = value[1][0];
     value[1][0] = temporaryMemory;
 
@@ -241,46 +179,33 @@ Matrix2& Matrix2::transpose(void)
     return *this;
 }
 
-//transpose given vector.
-Matrix2& Matrix2::transpose(Matrix2 inputMatrix)
-{
-    float temporaryMemory; // for storing elements of given matrix.
 
-    temporaryMemory = inputMatrix(0,1);
-    inputMatrix(0,1) = inputMatrix(1,0);
-    inputMatrix(1,0) = temporaryMemory;
-
-	//return transposed matrix.
-    return *this;
-}
-
-
-float Matrix2::determinant_of(Matrix2 inputMatrix)
+float Matrix2::determinant()
 {
     //calculate determinant of given matrix
     //using triangle rule.
 	
 	//determinant is : [a, b]  
 	//				   [c, d]  ,  ad - bc = determinant
-    float result = inputMatrix(0,0) * inputMatrix(1,1) - inputMatrix(0,1) * inputMatrix(1,0);
+	const auto result = *this[0][0] * *this[1][1] - *this[0][1] * *this[1][0];
 
 	//return determinant
     return result;
 }
 
-Matrix2 Matrix2::inverse_of(Matrix2 inputMatrix)
+Matrix2 Matrix2::inverse()
 {
     Matrix2 result;
 	
 	//inverse matrix : [a, b]				[ d, -b] /(divided by) determinant of original.
 	//				   [c, d], transform to [-c,  a]
-    float determinant = determinant_of(inputMatrix);
+	const auto determinant = this->determinant();
     
 
-    result(0,0) =  inputMatrix(1,1) / determinant;
-    result(0,1) = -inputMatrix(0,1) / determinant;
-    result(1,0) = -inputMatrix(1,0) / determinant;
-    result(1,1) =  inputMatrix(0,0) / determinant;
+    result(0,0) = *this[1][1] / determinant;
+    result(0,1) = -*this[0][1] / determinant;
+    result(1,0) = -*this[1][0] / determinant;
+    result(1,1) = *this[0][0] / determinant;
 
 	//return inversed matrix.
     return result;
@@ -311,21 +236,21 @@ Matrix2 Matrix2::operator*(Matrix2 secondInputMatrix)
 //build rotation matrix
 Matrix2 Matrix2::build_rotation(float degree)
 {
-	float cosDegree = std::cos(degree);
-	float sinDegree = std::sin(degree);
+	const auto cos_degree = std::cos(degree);
+	const auto sin_degree = std::sin(degree);
 
 	//rotation matrix : [ cos(degree), sin(degree)]
 	//					[-sin(degree), cos(degree)]
-	Matrix2 rotation = { cosDegree, sinDegree, -sinDegree, cosDegree };
+	const Matrix2 rotation = { cos_degree, sin_degree, -sin_degree, cos_degree };
 
 	//return rotation matrix.
 	return rotation;
 }
 
 //build identity matrix
-Matrix2 Matrix2::build_identity(void)
+Matrix2 Matrix2::build_identity()
 {
-	Matrix2 identity = { 1,0,0,1 };
+	const Matrix2 identity = { 1,0,0,1 };
 
 	//return identity matrix.
 	return identity;
