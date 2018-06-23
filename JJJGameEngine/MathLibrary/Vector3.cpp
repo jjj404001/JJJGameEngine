@@ -73,15 +73,10 @@ brief  :
 
 */
 /******************************************************************************/
-
-#include <cmath>
 #include "Vector3.hpp"
+#include "Constant.h"
 
 
-namespace
-{
-	const float PI = 4.0f * std::atan(1.0f);
-}
 
 //+ operator overloading for Vector3.
 Vector3 Vector3::operator+(Vector3 InputVector) const
@@ -90,9 +85,8 @@ Vector3 Vector3::operator+(Vector3 InputVector) const
 	Vector3 result(x,y,z);
 
 
-	result.x += InputVector.x;
-	result.y += InputVector.y;
-    result.z += InputVector.z;
+	result += InputVector;
+
 
 
 	//addition of 2 vectors.
@@ -101,9 +95,9 @@ Vector3 Vector3::operator+(Vector3 InputVector) const
 //+= operator overloading for Vector3.
 Vector3& Vector3::operator+=(Vector3 InputVector)
 {
-	x += InputVector.x;
-	y += InputVector.y;
-    z += InputVector.z;
+	value[0] += InputVector.x;
+	value[1] += InputVector.y;
+	value[2] += InputVector.z;
 
 	//addition of 2 vectors.
 	return *this;
@@ -113,9 +107,9 @@ Vector3& Vector3::operator+=(Vector3 InputVector)
 //-= operator overloading for Vector3
 Vector3& Vector3::operator-=(Vector3 InputVector)
 {
-    x -= InputVector.x;
-    y -= InputVector.y;
-    z -= InputVector.z;
+	value[0] -= InputVector.x;
+	value[1] -= InputVector.y;
+	value[2] -= InputVector.z;
 
 
 	//subtraction of 2 vectors.
@@ -127,228 +121,118 @@ Vector3 Vector3::operator-(Vector3 InputVector) const
 {
     Vector3 result(x,y,z);
 
-    result.x = InputVector.x;
-    result.y = InputVector.y;
-    result.z = InputVector.z;
+	result -= InputVector;
+
     //add newly created Vector3. which is addition of Vector3.
     return result;
 }
 
 //-(unary prefix) operator overloading for Vector3
-Vector3 Vector3::operator-(void)
+Vector3 Vector3::operator-()
 {
-	x = -x;
-	y = -y;
-    z = -z;
+	value[0] = -value[0];
+	value[1] = -value[1];
+	value[2] = -value[2];
 
 
-   return Vector3(x,y,z);
+   return {x,y,z};
 }
 
 
 //Scaling
 
 //* operator overloading for Vector3 with float
-Vector3 Vector3::operator*(float InputFloat) const
+template<typename Number>
+Vector3 Vector3::operator*(Number Input) const
 {
-	Vector3 result(x,y,z);
-
-	result.x *= InputFloat;
-	result.y *= InputFloat;
-    result.z *= InputFloat;
-
+	Vector3 result(x * Input, y * Input, z * Input);
 
 	return result;
 }
-
-//* operator overloading for Vector3 with int
-Vector3 Vector3::operator*(int InputInt) const
-{
-	Vector3 result(x,y,z);
-
-	result.x *= InputInt;
-	result.y *= InputInt;
-    result.z *= InputInt;
-
-	return result;
-}
-
-// *= operator overloading for Vector3 with float
-Vector3& Vector3::operator*=(float InputFloat)
-{
-	x *= InputFloat;
-	y *= InputFloat;
-    z *= InputFloat;
-
-	return *this;
-}
-
 // *= operator overloading for Vector3 with int
-Vector3& Vector3::operator*=(int InputInt)
+template<typename Number>
+Vector3& Vector3::operator*=(Number Input)
 {
-	x *= InputInt;
-	y *= InputInt;
-    z *= InputInt;
+	x *= Input;
+	y *= Input;
+    z *= Input;
 
 	return *this;
 }
 
 //Dividing
 //  / for vector to float dividing with Vector3
-Vector3 Vector3::operator/(float InputFloat) const
+template<typename Number>
+Vector3 Vector3::operator/(Number Input) const
 {
 	Vector3 result(x,y,z);
 
-	result.x /= InputFloat;
-	result.y /= InputFloat;
-    result.z /= InputFloat;
+	result.x /= Input;
+	result.y /= Input;
+    result.z /= Input;
 
 	return result;
-}
-
-//  / for vector to int dividing with Vector3
-Vector3 Vector3::operator/(int InputInt) const
-{
-	Vector3 result(x,y,z);
-
-	result.x /= InputInt;
-	result.y /= InputInt;
-    result.z /= InputInt;
-
-	return result;
-}
-
-//  /= vector to float dividing with Vector3
-Vector3& Vector3::operator/=(float InputFloat)
-{
-	x /= InputFloat;
-	y /= InputFloat;
-    z /= InputFloat;
-
-	return *this;
 }
     
 //  /= vector to int dividing with Vector3
-Vector3& Vector3::operator/=(int InputInt)
+template<typename Number>
+Vector3& Vector3::operator/=(Number input)
 {
-	x /= InputInt;
-	y /= InputInt;
-    z /= InputInt;
+	value[0] /= input;
+	value[0] /= input;
+	value[0] /= input;
 
 	return *this;
 }
 
 
 //Dot product. !!not scaling!!
-float Vector3::operator*(Vector3 InputVector) const
+float Vector3::operator*(const Vector3 input_vector) const
 {
 	//doing dot product.
-	float result = (InputVector.x * x) + (InputVector.y * y) + (InputVector.z * z); 
+	const auto result = (input_vector.x * x) + (input_vector.y * y) + (input_vector.z * z); 
 
 
 	return result;
 }
 
 
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////
-/////////////////////////non-member normal function.///////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-//Scaling
-//* for float to vector scaling with Vector3
-Vector3 operator*(const float InputFloat,const Vector3 InputVector)
-{
-	Vector3 result;
-
-	result.x = InputFloat * InputVector.x;
-	result.y = InputFloat * InputVector.y;
-    result.z = InputFloat * InputVector.z;
-
-	return result;
-}
-
-//* for int to vector scaling with Vector3
-Vector3 operator*(const int InputInt,const Vector3 InputVector)
-{
-	Vector3 result;
-
-	result.x = InputInt * InputVector.x;
-	result.y = InputInt * InputVector.y;
-    result.z = InputInt * InputVector.z;
-
-	return result;
-}
-
-//*= float to vector scaling with Vector3
-Vector3 operator*=(float InputFloat,Vector3 InputVector)
-{
-	return Vector3(InputFloat * InputVector.x, InputFloat * InputVector.y, InputFloat * InputVector.z);
-}
-    
-//*= int to scaling with Vector3
-Vector3 operator*=(int InputInt,Vector3 InputVector)
-{
-	return Vector3(InputInt * InputVector.x, InputInt * InputVector.y, InputInt * InputVector.z);
-}
-
-
-
-//Dividing
-//    / for vector to float dividing with Vector3
-Vector3 operator/(const float InputFloat, Vector3 InputVector)
-{
-	Vector3 result;
-
-	result.x = InputVector.x / InputFloat;
-	result.y = InputVector.y / InputFloat;
-    result.z = InputVector.z / InputFloat;
-
-	return result;
-}
-
-//    /* for vector to int dividing with Vector3
-Vector3 operator/(const int InputInt, Vector3 InputVector)
-{
-	Vector3 result;
-
-	result.x = InputVector.x / InputInt;
-	result.y = InputVector.y / InputInt;
-    result.z = InputVector.z / InputInt;
-
-	return result;
-}
 
 //Comparison operator
 //Determine if two vectors are equal or not.
-bool operator==(const Vector3 FirstInputVector, const Vector3 SecondInputVector)
+bool Vector3::operator==(const Vector3 first_input_vector) const
 {
 	//Condition is "if x component of first vector and second vector is equal, and also
 	//if y component of first vector and second vector is equal, then return true.
 	//else, return false.
 
-	const bool both_vectors_are_equal = (FirstInputVector.x == SecondInputVector.x)
-                               && (FirstInputVector.y == SecondInputVector.y)
-                               && (FirstInputVector.z == SecondInputVector.z);
+	const auto both_vectors_are_equal = (first_input_vector.x == this->x)
+		&& (first_input_vector.y == this->y)
+		&& (first_input_vector.z == this->z);
 
 
 	return both_vectors_are_equal;
 }
 //Determine if two vectors are NOT equal or not.
-bool operator!=(const Vector3 FirstInputVector, const Vector3 SecondInputVector)
+bool Vector3::operator!=(const Vector3 FirstInputVector) const
 {
 	//Condition is "if x component of first vector and second vector is NOT equal, and also
 	//if y component of first vector and second vector is NOT equal, then return true.
 	//else, return false.
 
-	const auto both_vectors_are_not_equal = (FirstInputVector.x != SecondInputVector.x)
-                                   || (FirstInputVector.y != SecondInputVector.y)
-                                   || (FirstInputVector.z != SecondInputVector.z);
+	const auto both_vectors_are_not_equal = (FirstInputVector.x != this->x)
+		|| (FirstInputVector.y != this->y)
+		|| (FirstInputVector.z != this->z);
 
 	return both_vectors_are_not_equal;
 }
+
+
+///////////////////////////////////////////////////////////////////////////////
+/////////////////////////non-member normal function.///////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+
 
 //Function for cross product
 Vector3 Vector3::cross(const Vector3 first_input_vector,const Vector3 second_input_vector)
@@ -363,14 +247,10 @@ Vector3 Vector3::cross(const Vector3 first_input_vector,const Vector3 second_inp
 
 
 //Calculate magnitude of given vector.
-float magnitude_of(const Vector3 InputVector)
+float Vector3::magnitude() const
 {
-	float magnitude;
-
 	//Calculate square of magnitude of vector.
-	magnitude =  (InputVector.x * InputVector.x);
-    magnitude += (InputVector.y * InputVector.y);
-    magnitude += (InputVector.z * InputVector.z);
+	float magnitude = squared_magnitude();
 
 	//Calculate square root of squared magnitude.
 	magnitude = sqrt(magnitude);
@@ -380,51 +260,46 @@ float magnitude_of(const Vector3 InputVector)
 }
 
 //Calculate squared magnitude of given vector.
-float squared_magnitude_of(const Vector3 InputVector)
+float Vector3::squared_magnitude() const
 {
-	float magnitude;
-
 	//Calculate square of magnitude of vector.
-	magnitude =  (InputVector.x * InputVector.x);
-    magnitude += (InputVector.y * InputVector.y);
-    magnitude += (InputVector.z * InputVector.z);
+	const auto magnitude = (x * x) + (y * y) + (z * z);
 
 
 	return magnitude;
 }
 
 //Normalize given vector
-Vector3 normalize(Vector3 InputVector)
+Vector3 Vector3::normalize()
 {
-	float magnitude = magnitude_of(InputVector);
+	const auto magnitude = this->magnitude();
 
 	//normalizing vector through dividing by magnitude.
-	InputVector.x /= magnitude;
-	InputVector.y /= magnitude;
-    InputVector.z /= magnitude;
+	*this /= magnitude;
+
 
 	//return normalized input vector.
-	return InputVector;
+	return *this;
 }
 
 //distance between two vectors.!!TREAT VECTORS AS POINT!!
-float distance_between(Vector3 FirstInputVector, Vector3 SecondInputVector)
+float Vector3::distance_between(Vector3 SecondInputVector) const
 {
 	//vector for storing calculated value.
 	Vector3 distanceVector = { 0, 0, 0 };
 	
 	//storing FirstInputVector - SecondInputVector
-	distanceVector.x = FirstInputVector.x - SecondInputVector.x;
-	distanceVector.y = FirstInputVector.y - SecondInputVector.y;
-    distanceVector.z = FirstInputVector.z - SecondInputVector.z;
+	distanceVector.value[0] = this->x - SecondInputVector.x;
+	distanceVector.value[1] = this->y - SecondInputVector.y;
+    distanceVector.value[2] = this->z - SecondInputVector.z;
 
 
 
-	return magnitude_of(distanceVector);
+	return distanceVector.magnitude();
 }
 
 //squared distance between two vectors.!!TREAT VECTORS AS POINT!!
-float distance_between_squared(Vector3 FirstInputVector, Vector3 SecondInputVector)
+float Vector3::distance_between_squared(const Vector3 second_input_vector) const
 {
 	//vector for storing calculated value.
 
@@ -434,20 +309,19 @@ float distance_between_squared(Vector3 FirstInputVector, Vector3 SecondInputVect
 	
     
 
-	distanceVector.x = FirstInputVector.x - SecondInputVector.x;
-	distanceVector.y = FirstInputVector.y - SecondInputVector.y;
-    distanceVector.z = FirstInputVector.z - SecondInputVector.z;
+	distanceVector.value[0] = this->x - second_input_vector.x;
+	distanceVector.value[1] = this->y - second_input_vector.y;
+    distanceVector.value[2] = this->z - second_input_vector.z;
 
 
 
-	return squared_magnitude_of(distanceVector);
+	return distanceVector.squared_magnitude();
 }
 
 //Angle between two vectors.
-float angle_between(Vector3 firstInputVector, Vector3 secondInputVector)
+float Vector3::angle_between(Vector3 second_input_vector) const
 {
-	float angle  = 0; //variable for storing angle.
-	float radian = 180.0f / PI;
+	
 
 	// angle between two vectors theory
 	// angle is
@@ -458,9 +332,9 @@ float angle_between(Vector3 firstInputVector, Vector3 secondInputVector)
 	//  so cosine(angle)                           = value of trigonometric function.
 	// arc-cosine(value of trigonometric function) = angle. in radian.
 
-	angle  = firstInputVector * secondInputVector;
-	angle /= magnitude_of(firstInputVector) * magnitude_of(secondInputVector);
-	angle  = std::acos(angle) * radian; // calculate value of arc cosine and translate it to degree.
+	float angle = *this * second_input_vector;
+	angle /= this->magnitude() * second_input_vector.magnitude();
+	angle  = std::acos(angle)  * Math::RADIAN; // calculate value of arc cosine and translate it to degree.
 
 	return angle;
 }

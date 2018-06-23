@@ -78,89 +78,69 @@ brief  :
 
 struct Vector3
 {
-    float x = 0;
-    float y = 0;
-    float z = 0;
-	
+	float value[3]{0,};
+	const float& x = value[0];
+	const float& y = value[1];
+	const float& z = value[2];
+
 	//constructor for Vector3 initialization
 	Vector3() = default;
 
-    Vector3(float InitX)
-    {
-        x = InitX;
-        y = InitX;
-		z = InitX;
-    }
-    
-    Vector3(float InitX, float InitY, float InitZ)
-    {
-        x = InitX;
-        y = InitY;
-        z = InitZ;
-    }
-    //addition
+	Vector3(float InitX, float InitY, float InitZ)
+	{
+		value[0] = InitX;
+		value[1] = InitY;
+		value[2] = InitZ;
+	}
+
+	//addition
 
 	Vector3 operator+(Vector3 InputVector) const; //addition with +
-	Vector3& operator+=(Vector3 InputVector);	  //addition with +=
+	Vector3& operator+=(Vector3 InputVector); //addition with +=
 
-    //subtraction
-    Vector3 operator-(Vector3 InputVector) const; //subtraction with -
-    Vector3& operator-=(Vector3 InputVector);	  //subtraction with -=
-    Vector3 operator-();					  //unary prefix
-
-
-    //Scaling
-    
-    Vector3 operator*(float InputFloat) const; //    * for vector to float scaling with Vector3
-    Vector3 operator*(int InputInt) const;     //    * for vector to int scaling with Vector3
-    Vector3& operator*=(float InputFloat);     //    *= vector to float scaling with Vector3
-    Vector3& operator*=(int InputInt);         //    *= vector to int scaling with Vector3
+	//subtraction
+	Vector3 operator-(Vector3 InputVector) const; //subtraction with -
+	Vector3& operator-=(Vector3 InputVector); //subtraction with -=
+	Vector3 operator-(); //unary prefix
 
 
-    //Dividing
-    
-    Vector3 operator/(float InputFloat) const;//    * for vector to float dividing with Vector3
-    Vector3 operator/(int InputInt) const;    //    * for vector to int dividing with Vector3
-    Vector3& operator/=(float InputFloat);    //    *= vector to float dividing with Vector3
-    Vector3& operator/=(int InputInt);        //    *= vector to int dividing with Vector3
+	//Scaling
+	template <typename Number>
+	Vector3 operator*(Number Input) const; //    * for vector to float scaling with Vector3=
+	template <typename Number>
+	Vector3& operator*=(Number Input); //    *= vector to int scaling with Vector3
 
 
+	//Dividing
+	template <typename Number>
+	Vector3 operator/(Number Input) const; //    * for vector to float dividing with Vector3
+	template <typename Number>
+	Vector3& operator/=(Number input); //    *= vector to int dividing with Vector3
 
-    //Dot product. !!not scaling!!
-    float operator*(Vector3 input_vector) const;
+
+	//Dot product. !!not scaling!!
+	float operator*(Vector3 input_vector) const;
 
 	static Vector3 cross(Vector3 first_input_vector, Vector3 second_input_vector); //Function for cross product
+
+
+	//Comparison operator
+
+	bool operator==(Vector3 first_input_vector) const; //Determine if two vectors are equal or not.
+	bool operator!=(Vector3 first_input_vector) const; //Determine if two vectors are NOT equal or not.
+
+
+	float magnitude() const; //Calculate magnitude of given vector.
+	float squared_magnitude() const; //Calculate squared magnitude of given vector.
+
+
+	Vector3 normalize(); //Normalize given vector
+
+
+	float distance_between(Vector3 second_input_vector) const; //distance between two vectors.!!TREAT VECTORS AS POINT!!
+	float distance_between_squared(Vector3 second_input_vector) const;
+	//squared distance between two vectors.!!TREAT VECTORS AS POINT!!
+
+
+	float angle_between(Vector3 second_input_vector) const; //Angle between two vectors.
 };
-///////////////////////////////////////////////////////////////////////////////
-/////////////////////////non-member normal function.///////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-//Scaling
-
-Vector3 operator*(float InputFloat,Vector3 InputVector);  //    * for float to vector scaling with Vector3
-Vector3 operator*(int InputInt,Vector3 InputVector);      //    * for int to vector scaling with Vector3
-Vector3 operator*=(float InputFloat,Vector3 InputVector); //    *= float to vector scaling with Vector3
-Vector3 operator*=(int InputInt,Vector3 InputVector);     //    *= int to scaling with Vector3
-
-
-//Comparison operator
-
-bool operator==(const Vector3 FirstInputVector, const Vector3 SecondInputVector); //Determine if two vectors are equal or not.
-
-bool operator!=(const Vector3 FirstInputVector, const Vector3 SecondInputVector); //Determine if two vectors are NOT equal or not.
-
-
-
-
-float magnitude_of(const Vector3 InputVector);          //Calculate magnitude of given vector.
-float squared_magnitude_of(const Vector3 InputVector); //Calculate squared magnitude of given vector.
-
-
-Vector3 normalize(Vector3 InputVector); //Normalize given vector
-
-
-float distance_between(Vector3 FirstInputVector, Vector3 SecondInputVector);         //distance between two vectors.!!TREAT VECTORS AS POINT!!
-float distance_between_squared(Vector3 FirstInputVector, Vector3 SecondInputVector); //squared distance between two vectors.!!TREAT VECTORS AS POINT!!
-
-
-float angle_between(Vector3 firstInputVector, Vector3 secondInputVector); //Angle between two vectors.

@@ -39,17 +39,17 @@ brief  :
 struct Affine2d
 {
     //3*3 matrix consist of 3 vectors.
-    float affine_map[3][3] = {{0,},{0,},{0,}};
+    float value[3][3] = {{0,},{0,},{0,}};
 
     Affine2d() = default;  //default constructor. filled with 0.
 
     Affine2d(const Vector3 column0, const Vector3 column1, const Vector3 column2) :
-		affine_map{ {column0.x, column0.y, column0.z},{ column1.x, column1.y, column1.z}, {column2.x, column2.y, column2.z} } {}     //constructor for 3 Vector3.
+		value{ {column0.x, column0.y, column0.z},{ column1.x, column1.y, column1.z}, {column2.x, column2.y, column2.z} } {}     //constructor for 3 Vector3.
 
     Affine2d(const float column0_row0, const float column0_row1, const float column0_row2,
 			 const float column1_row0, const float column1_row1, const float column1_row2,
 			 const float column2_row0, const float column2_row1, const float column2_row2) :
-             affine_map{column0_row0, column0_row1, column0_row2,
+             value{column0_row0, column0_row1, column0_row2,
                        column1_row0, column1_row1, column1_row2,
                        column2_row0, column2_row1, column2_row2}{}//explicit constructor using 9 floats.
 

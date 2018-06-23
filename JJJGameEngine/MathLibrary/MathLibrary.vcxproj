@@ -121,6 +121,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Affine2d.cpp" />
+    <ClCompile Include="Affine3d.cpp" />
     <ClCompile Include="Matrix2.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Vector2.cpp" />
@@ -128,6 +129,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Affine2d.hpp" />
+    <ClInclude Include="Affine3d.h" />
+    <ClInclude Include="Constant.h" />
     <ClInclude Include="Matrix2.hpp" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Vector2.hpp" />

@@ -40,26 +40,26 @@ float& Affine2d::operator()(const int column, const int row)
 {
 	assert("Out of index." && column < 3 && row < 3 && column >= 0 && row >= 0);
 	//return element of affine matrix.
-    return affine_map[column][row];
+    return value[column][row];
 }
 
 const float& Affine2d::operator()(const int column, const int row) const//same with above but using const parameter.
 {
 	assert("Out of index." && column < 3 && row < 3 && column >= 0 && row >= 0);
 	//return element of affine matrix.
-    return affine_map[column][row];
+    return value[column][row];
 }
 
 float* Affine2d::operator[](const int column)
 {
 	assert("Out of index." && column < 3 && column >= 0);
-	return affine_map[column];
+	return value[column];
 }
 
 const float* Affine2d::operator[](const int column) const
 {
 	assert("Out of index." && column < 3 && column >= 0 );
-	return affine_map[column];
+	return value[column];
 }
 
 
@@ -81,7 +81,7 @@ Affine2d Affine2d::operator*(Affine2d input_affine) const
 				
 			while(k < AFFINE2D_DIMENSION)
 			{
-				result(i,j) += affine_map[i][k] * input_affine(k,j);
+				result(i,j) += value[i][k] * input_affine(k,j);
 
 					
 					
@@ -119,17 +119,17 @@ Affine2d& Affine2d::transpose()
 
 	for(auto loop_index = 1; loop_index < 3; ++loop_index)
 	{
-		temporary_memory         = affine_map[0][loop_index];
+		temporary_memory         = value[0][loop_index];
 		
-		affine_map[0][loop_index] = affine_map[loop_index][0];
-		affine_map[loop_index][0] = temporary_memory;
+		value[0][loop_index] = value[loop_index][0];
+		value[loop_index][0] = temporary_memory;
 	}
 	
 	//handling exception
-	temporary_memory = affine_map[1][2];
+	temporary_memory = value[1][2];
 	
-	affine_map[1][2] = affine_map[2][1];
-	affine_map[2][1] = temporary_memory;
+	value[1][2] = value[2][1];
+	value[2][1] = temporary_memory;
 	
 
 	
