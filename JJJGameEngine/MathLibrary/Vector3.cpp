@@ -179,8 +179,8 @@ template<typename Number>
 Vector3& Vector3::operator/=(Number input)
 {
 	value[0] /= input;
-	value[0] /= input;
-	value[0] /= input;
+	value[1] /= input;
+	value[2] /= input;
 
 	return *this;
 }

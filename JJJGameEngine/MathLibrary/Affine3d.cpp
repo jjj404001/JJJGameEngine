@@ -33,32 +33,33 @@ non-member normal function :
 #include "Affine3d.h"
 #include <cmath> 
 #include <cassert>
+#include "Vector3.hpp"
 
 
 //()operator overloading for accessing affine 2d.
 float& Affine3d::operator()(const int column, const int row)
 {
-	assert("Out of index." && column < 3 && row < 3 && column >= 0 && row >= 0);
+	assert("Out of index." && column <= 3 && row <= 3 && column >= 0 && row >= 0);
 	//return element of affine matrix.
 	return value[column][row];
 }
 
 const float& Affine3d::operator()(const int column, const int row) const//same with above but using const parameter.
 {
-	assert("Out of index." && column < 3 && row < 3 && column >= 0 && row >= 0);
+	assert("Out of index." && column <= 3 && row <= 3 && column >= 0 && row >= 0);
 	//return element of affine matrix.
 	return value[column][row];
 }
 
 float* Affine3d::operator[](const int column)
 {
-	assert("Out of index." && column < 3 && column >= 0);
+	assert("Out of index." && column <= 3 && column >= 0);
 	return value[column];
 }
 
 const float* Affine3d::operator[](const int column) const
 {
-	assert("Out of index." && column < 3 && column >= 0);
+	assert("Out of index." && column <= 3 && column >= 0);
 	return value[column];
 }
 
@@ -72,14 +73,14 @@ Affine3d Affine3d::operator*(Affine3d input_affine) const
 
 	auto i = 0, j = 0, k = 0; //variable for loop index.
 
-	while (i < AFFINE2D_DIMENSION)
+	while (i < AFFINE3D_DIMENSION)
 	{
 
-		while (j < AFFINE2D_DIMENSION)
+		while (j < AFFINE3D_DIMENSION)
 		{
 
 
-			while (k < AFFINE2D_DIMENSION)
+			while (k < AFFINE3D_DIMENSION)
 			{
 				result(i, j) += value[i][k] * input_affine(k, j);
 
@@ -117,7 +118,7 @@ Affine3d& Affine3d::transpose()
 	float temporary_memory; //variable for memory original affine matrix
 
 
-	for (auto loop_index = 1; loop_index < 3; ++loop_index)
+	for (auto loop_index = 1; loop_index < AFFINE3D_DIMENSION; ++loop_index)
 	{
 		temporary_memory = value[0][loop_index];
 
@@ -155,13 +156,11 @@ Affine3d Affine3d::build_rotation(float degree)
 Affine3d Affine3d::build_identity()
 {
 	Affine3d identity;
-	const auto number_of_columns = 3; //number of columns
-	const auto number_of_rows = 3; //number of rows
 
 
-	for (auto loop_index1 = 0; loop_index1 < number_of_columns; ++loop_index1)
+	for (auto loop_index1 = 0; loop_index1 < AFFINE3D_DIMENSION; ++loop_index1)
 	{
-		for (auto loop_index2 = 0; loop_index2 < number_of_rows; ++loop_index2)
+		for (auto loop_index2 = 0; loop_index2 < AFFINE3D_DIMENSION; ++loop_index2)
 		{
 			if (loop_index1 == loop_index2)
 			{
@@ -181,13 +180,11 @@ Affine3d Affine3d::build_identity()
 Affine3d Affine3d::build_scale(float scale_factor)
 {
 	Affine3d scale;
-	const auto number_of_columns = 3; //number of columns
-	const auto number_of_rows = 3; //number of rows
 
 
-	for (auto loop_index1 = 0; loop_index1 < number_of_columns; ++loop_index1)
+	for (auto loop_index1 = 0; loop_index1 < AFFINE3D_DIMENSION; ++loop_index1)
 	{
-		for (auto loop_index2 = 0; loop_index2 < number_of_rows; ++loop_index2)
+		for (auto loop_index2 = 0; loop_index2 < AFFINE3D_DIMENSION; ++loop_index2)
 		{
 			if (loop_index1 == loop_index2)
 			{
