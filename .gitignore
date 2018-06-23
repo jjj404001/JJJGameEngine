@@ -4,3 +4,6 @@
 
 /JJJGameEngine/.vs/JJJGameEngine/v15
 *.user
+/JJJGameEngine/MathLibrary/Debug
+/JJJGameEngine/JJJGameEngine/Debug
+/JJJGameEngine/Debug

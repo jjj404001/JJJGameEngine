@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27428.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JJJGameEngine", "JJJGameEngine\JJJGameEngine.vcxproj", "{355BBE2E-1604-4C26-B909-7CD7BD5BF545}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MathLibrary", "..\MathLibrary\MathLibrary.vcxproj", "{4FC08314-3A22-40EB-852C-EFBF09048220}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MathLibrary", "MathLibrary\MathLibrary.vcxproj", "{4FC08314-3A22-40EB-852C-EFBF09048220}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
