@@ -143,8 +143,8 @@ Vector2 Vector2::operator-() const
 
 //Scaling
 
-//* operator overloading for Vector2 with float
-Vector2 Vector2::operator*(const float input_float) const
+template <typename Number>
+Vector2 Vector2::operator*(const Number input_float) const
 {
 	const Vector2 result(value[0] * input_float, value[1] * input_float);
 
@@ -152,26 +152,8 @@ Vector2 Vector2::operator*(const float input_float) const
 	return result;
 }
 
-//* operator overloading for Vector2 with int
-Vector2 Vector2::operator*(const int input_int) const
-{
-	const Vector2 result(value[0] * input_int, value[1] * input_int);
-
-
-	return result;
-}
-
-// *= operator overloading for Vector2 with float
-Vector2& Vector2::operator*=(const float input_float)
-{
-	value[0] *= input_float;
-	value[1] *= input_float;
-
-	return *this;
-}
-
-// *= operator overloading for Vector2 with int
-Vector2& Vector2::operator*=(const int input_int)
+template <typename Number>
+Vector2& Vector2::operator*=(const Number input_int)
 {
 	value[0] *= input_int;
 	value[1] *= input_int;
@@ -180,35 +162,17 @@ Vector2& Vector2::operator*=(const int input_int)
 }
 
 //Dividing
-//  / for vector to float dividing with Vector2
-Vector2 Vector2::operator/(const float input_float) const
+template <typename Number>
+Vector2 Vector2::operator/(const Number input_float) const
 {
 	const Vector2 result(value[0] / input_float, value[1] / input_float);
 
 
 	return result;
 }
-
-//  / for vector to int dividing with Vector2
-Vector2 Vector2::operator/(const int input_int) const
-{
-	const Vector2 result(value[0] / input_int, value[1] / input_int);
-
-
-	return result;
-}
-
-//  /= vector to float dividing with Vector2
-Vector2& Vector2::operator/=(const float input_float)
-{
-	value[0] /= input_float;
-	value[1] /= input_float;
-
-	return *this;
-}
     
-//  /= vector to int dividing with Vector2
-Vector2& Vector2::operator/=(const int input_int)
+template <typename Number>
+Vector2& Vector2::operator/=(const Number input_int)
 {
 	value[0] /= input_int;
 	value[1] /= input_int;
@@ -266,7 +230,7 @@ float Vector2::angle_between(const Vector2 secondinput_vector) const
 	// arc-cosine(value of trigonometric function) = angle. in radian.
 	const auto radian = 180.0f / pi;
 	auto angle = (*this * secondinput_vector);
-	angle /= magnitude_of(*this) * magnitude_of(secondinput_vector);
+	angle /= this->magnitude() * secondinput_vector.magnitude();
 	angle = std::acos(angle) * radian; // calculate value of arc cosine and translate it to degree.
 
 	return angle;
@@ -276,42 +240,6 @@ float Vector2::angle_between(const Vector2 secondinput_vector) const
 ///////////////////////////////////////////////////////////////////////////////
 /////////////////////////non-member normal function.///////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
-//Scaling
-//* for float to vector scaling with Vector2
-Vector2 operator*(const float input_float, const Vector2 input_vector)
-{
-	const Vector2 result(input_float * input_vector.value[0], input_float * input_vector.value[1]);
-
-	return result;
-}
-
-//* for int to vector scaling with Vector2
-Vector2 operator*(const int input_int, const Vector2 input_vector)
-{
-	const Vector2 result(input_int * input_vector.value[0], input_int * input_vector.value[1]);
-
-	return result;
-}
-
-//Dividing
-//    / for vector to float dividing with Vector2
-Vector2 operator/(const float input_float, const Vector2 input_vector)
-{
-	const Vector2 result(input_vector.value[0] / input_float, input_vector.value[1] / input_float);
-
-	return result;
-}
-
-//    /* for vector to int dividing with Vector2
-Vector2 operator/(const int input_int, const Vector2 input_vector)
-{
-	const Vector2 result(input_vector.value[0] / input_int, input_vector.value[1] / input_int);
-
-
-	return result;
-}
-
-
 
 //making vector which is perpendicular
 //from given vector.
@@ -333,10 +261,10 @@ Vector2 Vector2::perpendicular() const
 }
 
 //Calculate magnitude of given vector.
-float magnitude_of(const Vector2 input_vector)
+float Vector2::magnitude() const
 {
 	//Calculate square of magnitude of vector.
-	auto magnitude = (input_vector.value[0] * input_vector.value[0]) + (input_vector.value[1] * input_vector.value[1]);
+	auto magnitude = (value[0] * value[0]) + (value[1] * value[1]);
 
 	//Calculate square root of squared magnitude.
 	magnitude = sqrt(magnitude);
@@ -345,40 +273,40 @@ float magnitude_of(const Vector2 input_vector)
 }
 
 //Calculate squared magnitude of given vector.
-float squared_magnitude_of(const Vector2 input_vector)
+float Vector2::squared_magnitude()
 {
 	//Calculate square of magnitude of vector.
-	const auto magnitude = (input_vector.value[0] * input_vector.value[0]) + (input_vector.value[1] * input_vector.value[1]);
+	const auto magnitude = (value[0] * value[0]) + (value[1] * value[1]);
 
 
 	return magnitude;
 }
 
 //Normalize given vector
-Vector2 normalize(Vector2 input_vector)
+Vector2 Vector2::normalize()
 {
-	const auto magnitude = magnitude_of(input_vector);
+	const auto magnitude = this->magnitude();
 
 	//normalizing vector through dividing by magnitude.
-	input_vector.value[0] /= magnitude;
-	input_vector.value[1] /= magnitude;
+	value[0] /= magnitude;
+	value[1] /= magnitude;
 
 	//return normalized input vector.
-	return input_vector;
+	return *this;
 }
 
 //distance between two vectors.!!TREAT VECTORS AS POINT!!
-float distance_between(const Vector2 firstinput_vector, const Vector2 secondinput_vector)
+float Vector2::distance_between(const Vector2 firstinput_vector, const Vector2 secondinput_vector)
 {
 	//vector for storing calculated value.
 	const Vector2 distance_vector(firstinput_vector.value[0] - secondinput_vector.value[0], firstinput_vector.value[1] - secondinput_vector.value[1]);
 	
 
-	return magnitude_of(distance_vector);
+	return distance_vector.magnitude();
 }
 
 //squared distance between two vectors.!!TREAT VECTORS AS POINT!!
-float distance_between_squared(const Vector2 firstinput_vector, const Vector2 secondinput_vector)
+float Vector2::distance_between_squared(const Vector2 firstinput_vector, const Vector2 secondinput_vector)
 {
 	return (firstinput_vector.value[0] - secondinput_vector.value[0]) * (firstinput_vector.value[0] - secondinput_vector.value[0]) + (firstinput_vector.value[1] - secondinput_vector.value[1]) * (firstinput_vector.value[1] - secondinput_vector.value[1]);
 }

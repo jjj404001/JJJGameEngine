@@ -114,19 +114,17 @@ struct Vector2
 
 
     //Scaling
-    Vector2 operator*(float input_float) const; // * for vector to float scaling with Vector2
-    Vector2 operator*(int input_int) const;    // * for vector to int scaling with Vector2
-
-    
-    Vector2& operator*=(float input_float);    // *= vector to float scaling with Vector2
-    Vector2& operator*=(int input_int);        // *= vector to int scaling with Vector2
+	template <typename Number>
+    Vector2 operator*(Number input_float) const; // * for vector to Number scaling with Vector2
+	template <typename Number>
+    Vector2& operator*=(Number input_int);        // *= vector to Number scaling with Vector2
 
 
     //Dividing
-    Vector2 operator/(float input_float) const; //    * for vector to float dividing with Vector2
-    Vector2 operator/(int input_int) const;     //    * for vector to int dividing with Vector2
-    Vector2& operator/=(float input_float);     //    *= vector to float dividing with Vector2
-    Vector2& operator/=(int input_int);         //    *= vector to int dividing with Vector2
+	template <typename Number>
+    Vector2 operator/(Number input_float) const; //    * for vector to float dividing with Vector2
+	template <typename Number>
+    Vector2& operator/=(Number input_float);     //    *= vector to float dividing with Vector2
 	
 
 
@@ -148,29 +146,20 @@ struct Vector2
 
 	Vector2 perpendicular() const;//Calculate vector which is perpendicular
 													  //from given vector.
+
+
+	Vector2 normalize(); //Normalize given vector
+
+
+	float magnitude() const;         //Calculate magnitude of given vector.
+	float squared_magnitude(); //Calculate squared magnitude of given vector.
+
+
+	float distance_between(Vector2 firstinput_vector, Vector2 secondinput_vector);         //distance between two vectors.!!TREAT VECTORS AS POINT!!
+	float distance_between_squared(Vector2 firstinput_vector, Vector2 secondinput_vector); //squared distance between two vectors.!!TREAT VECTORS AS POINT!!
+
 };
-///////////////////////////////////////////////////////////////////////////////
-/////////////////////////non-member normal function.///////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-//using non-member operator overloading for non-vector left operand
-
-//Scaling
-
-Vector2 operator*(float input_float, Vector2 input_vector);  //    * for float to vector scaling with Vector2
-Vector2 operator*(int input_int, Vector2 input_vector);      //    * for int to vector scaling with Vector2
 
 
 
-
-Vector2 normalize(Vector2 input_vector); //Normalize given vector
- 
-
-float magnitude_of(Vector2 input_vector);         //Calculate magnitude of given vector.
-float squared_magnitude_of(Vector2 input_vector); //Calculate squared magnitude of given vector.
-
-
-float distance_between(Vector2 firstinput_vector, Vector2 secondinput_vector);         //distance between two vectors.!!TREAT VECTORS AS POINT!!
-float distance_between_squared(Vector2 firstinput_vector, Vector2 secondinput_vector); //squared distance between two vectors.!!TREAT VECTORS AS POINT!!
 

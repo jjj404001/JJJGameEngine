@@ -106,7 +106,7 @@ struct Vector3
     //subtraction
     Vector3 operator-(Vector3 InputVector) const; //subtraction with -
     Vector3& operator-=(Vector3 InputVector);	  //subtraction with -=
-    Vector3 operator-(void);					  //unary prefix
+    Vector3 operator-();					  //unary prefix
 
 
     //Scaling
@@ -129,7 +129,7 @@ struct Vector3
     //Dot product. !!not scaling!!
     float operator*(Vector3 input_vector) const;
 
-	static Vector3 cross(const Vector3 first_input_vector, const Vector3 second_input_vector); //Function for cross product
+	static Vector3 cross(Vector3 first_input_vector, Vector3 second_input_vector); //Function for cross product
 };
 ///////////////////////////////////////////////////////////////////////////////
 /////////////////////////non-member normal function.///////////////////////////
