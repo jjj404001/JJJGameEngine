@@ -140,8 +140,8 @@ Affine2d& Affine2d::transpose()
 
 Affine2d Affine2d::build_rotation(float degree)
 {
-	const Vector3 u = {std::cos(degree), std::sin(degree), 0}; //u,v,t vectors for easy-building affine matrix.
-	const Vector3 v = {-std::sin(degree), std::cos(degree), 0};
+	const Vector3 u = {std::cos(degree), -std::sin(degree), 0}; //u,v,t vectors for easy-building affine matrix.
+	const Vector3 v = {std::sin(degree), std::cos(degree), 0};
 	const Vector3 t = {0.0f, 0.0f, 1};
 
 	const Affine2d rotation_matrix = { u, v, t };

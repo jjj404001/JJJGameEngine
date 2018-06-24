@@ -34,6 +34,7 @@ non-member normal function :
 #include <cmath> 
 #include <cassert>
 #include "Vector3.hpp"
+#include "Vector2.hpp"
 
 
 //()operator overloading for accessing affine 2d.
@@ -138,17 +139,36 @@ Affine3d& Affine3d::transpose()
 	return *this;
 }
 
-
-Affine3d Affine3d::build_rotation(float degree)
+//https://1drv.ms/f/s!AtYPT4LaIMURjEXnU7qVazIv8u1u
+Affine3d Affine3d::build_rotation(float degree, Math::Axis axis = Math::Z)
 {
-	const Vector3 u = { std::cos(degree), std::sin(degree), 0 }; //u,v,t vectors for easy-building affine matrix.
-	const Vector3 v = { -std::sin(degree), std::cos(degree), 0 };
-	const Vector3 t = { 0.0f, 0.0f, 1 };
+	const Vector2 u = { std::cos(degree),  -std::sin(degree)};
+	const Vector2 v = { std::sin(degree), std::cos(degree)};
 
-	const Affine3d rotation_matrix = { u, v, t };
+	Affine3d rotation_matrix = build_identity();
 
+	if(axis == Math::Axis::X)
+	{
+		rotation_matrix[1][1] = u.x;
+		rotation_matrix[1][2] = u.y;
+		rotation_matrix[2][1] = v.x;
+		rotation_matrix[2][2] = v.y;
+	}
+	else if (axis == Math::Axis::Y)
+	{
+		rotation_matrix[0][0] = u.x;
+		rotation_matrix[0][2] = u.y;
+		rotation_matrix[2][0] = v.x;
+		rotation_matrix[2][2] = v.y;
+	}
+	else if (axis == Math::Axis::Z)
+	{
+		rotation_matrix[0][0] = u.x;
+		rotation_matrix[0][1] = u.y;
+		rotation_matrix[1][0] = v.x;
+		rotation_matrix[1][1] = v.y;
+	}
 
-	//return rotation matrix.
 	return rotation_matrix;
 }
 
