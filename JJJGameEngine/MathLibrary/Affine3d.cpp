@@ -140,7 +140,7 @@ Affine3d& Affine3d::transpose()
 }
 
 //https://1drv.ms/f/s!AtYPT4LaIMURjEXnU7qVazIv8u1u
-Affine3d Affine3d::build_rotation(float degree, Math::Axis axis = Math::Z)
+Affine3d Affine3d::build_rotation(float degree, Math::Axis axis)
 {
 	const Vector2 u = { std::cos(degree),  -std::sin(degree)};
 	const Vector2 v = { std::sin(degree), std::cos(degree)};

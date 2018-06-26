@@ -106,9 +106,21 @@ struct Vector3
 
 	//Scaling
 	template <typename Number>
-	Vector3 operator*(Number Input) const; //    * for vector to float scaling with Vector3=
+	Vector3 operator*(Number Input) const //    * for vector to float scaling with Vector3=
+	{
+		Vector3 result(x * Input, y * Input, z * Input);
+
+		return result;
+	}
 	template <typename Number>
-	Vector3& operator*=(Number Input); //    *= vector to int scaling with Vector3
+	Vector3& operator*=(Number Input) //    *= vector to int scaling with Vector3
+	{
+		x *= Input;
+		y *= Input;
+		z *= Input;
+
+		return *this;
+	}
 
 
 	//Dividing

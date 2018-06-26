@@ -82,7 +82,7 @@ brief  :
 Vector3 Vector3::operator+(Vector3 InputVector) const
 {
 	//add newly created Vector3. which is going to be addition of Vector3.
-	Vector3 result(x,y,z);
+	Vector3 result(value[0],value[1],value[2]);
 
 
 	result += InputVector;
@@ -95,9 +95,9 @@ Vector3 Vector3::operator+(Vector3 InputVector) const
 //+= operator overloading for Vector3.
 Vector3& Vector3::operator+=(Vector3 InputVector)
 {
-	value[0] += InputVector.x;
-	value[1] += InputVector.y;
-	value[2] += InputVector.z;
+	value[0] += InputVector.value[0];
+	value[1] += InputVector.value[1];
+	value[2] += InputVector.value[2];
 
 	//addition of 2 vectors.
 	return *this;
@@ -141,24 +141,6 @@ Vector3 Vector3::operator-()
 
 //Scaling
 
-//* operator overloading for Vector3 with float
-template<typename Number>
-Vector3 Vector3::operator*(Number Input) const
-{
-	Vector3 result(x * Input, y * Input, z * Input);
-
-	return result;
-}
-// *= operator overloading for Vector3 with int
-template<typename Number>
-Vector3& Vector3::operator*=(Number Input)
-{
-	x *= Input;
-	y *= Input;
-    z *= Input;
-
-	return *this;
-}
 
 //Dividing
 //  / for vector to float dividing with Vector3
@@ -237,9 +219,9 @@ bool Vector3::operator!=(const Vector3 FirstInputVector) const
 //Function for cross product
 Vector3 Vector3::cross(const Vector3 first_input_vector,const Vector3 second_input_vector)
 {
-	const Vector3 result = { (first_input_vector.x * second_input_vector.y) - (first_input_vector.y * second_input_vector.x),
-					   (first_input_vector.y * second_input_vector.z) - (first_input_vector.z * second_input_vector.y),
-					   (first_input_vector.z * second_input_vector.x) - (first_input_vector.x * second_input_vector.z)};
+	const Vector3 result = { (first_input_vector.y * second_input_vector.z) - (first_input_vector.z * second_input_vector.y),
+					   (first_input_vector.x * second_input_vector.z) - (first_input_vector.z * second_input_vector.x),
+					   (first_input_vector.x * second_input_vector.y) - (first_input_vector.y * second_input_vector.x)};
 	
 	
 	return result;
