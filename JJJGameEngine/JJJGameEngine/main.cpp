@@ -20,7 +20,7 @@ int main()
 	fake_window.Create_Old_Context();
 
 	// Set attrib
-	Attributes attributes(main_opengl.major_version, main_opengl.minor_version);
+	const Attributes attributes(main_opengl.major_version, main_opengl.minor_version);
 
 	
 	main_opengl.Create_Context(attributes, fake_window);
@@ -32,8 +32,8 @@ int main()
 
 
 	const auto version = reinterpret_cast<const char*>(glGetString(GL_VERSION));
-
 	std::cout << version << std::endl;
+
 	while (!main_opengl.quit)
 	{
 		main_opengl.Update();

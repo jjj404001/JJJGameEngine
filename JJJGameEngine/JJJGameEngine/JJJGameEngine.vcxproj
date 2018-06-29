@@ -147,12 +147,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Color.cpp" />
     <ClCompile Include="GLWindow.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Attributes.h" />
+    <ClInclude Include="Color.h" />
     <ClInclude Include="GLWindow.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Timer.h" />

@@ -5,7 +5,7 @@
 #include <iostream>
 #include <string>
 
-#define GREEN 0.0f, 0.586f, 0.0f, 1.0f
+
 // Prototype
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 void GLWindow::Register_OpenGL_Class(bool is_fake)
@@ -124,6 +124,30 @@ bool GLWindow::Destroy_Old_Context()
 	return true;
 }
 
+void GLWindow::PrintFPS(double input_duration)
+{
+	ellapsed_time += input_duration;
+	fps++;
+
+	const auto name = CLASS_NAME + std::to_string(previous_fps);
+	const auto name_additional = " Ellapsed time between frame : " + std::to_string(previous_ellapsed_time);
+
+
+	SetWindowText(hWnd_, (name + name_additional).c_str());
+
+	if (ellapsed_time > 1.0)
+	{
+		std::cout << "FPS  : " << fps << std::endl;
+		std::cout << "TIME : " << ellapsed_time << std::endl;
+
+		previous_fps = fps;
+		previous_ellapsed_time = ellapsed_time;
+
+		fps = 0;
+		ellapsed_time = 0.0;
+	}
+}
+
 bool GLWindow::InitOpenGL()
 {
 	opengl_functions_.InitOpenGLFunctions();
@@ -156,33 +180,13 @@ void GLWindow::Update()
 	//graphic.SetPolyMode(GL_LINE);
 	//glPolygonMode(GL_FRONT_AND_BACK, graphic.GetPolyMode());
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	glClearColor(GREEN);
+	glClearColor(clear_color_.Red, clear_color_.Green, clear_color_.Blue, clear_color_.Alpha);
 	glClear(GL_COLOR_BUFFER_BIT);
 	SwapBuffers(device_context_);
 
 
 	const auto duration = timer.Clock_End();
-
-	ellapsed_time += duration;
-	fps++;
-
-	const auto name = CLASS_NAME + std::to_string(previous_fps);
-	const auto name_additional = " Ellapsed time between frame : " + std::to_string(previous_ellapsed_time);
-
-
-	SetWindowText(hWnd_, (name + name_additional).c_str());
-
-	if (ellapsed_time > 1.0)
-	{
-		std::cout << "FPS  : " << fps << std::endl;
-		std::cout << "TIME : " << ellapsed_time << std::endl;
-
-		previous_fps = fps;
-		previous_ellapsed_time = ellapsed_time;
-
-		fps = 0;
-		ellapsed_time = 0.0;
-	}
+	PrintFPS(duration);
 }
 
 

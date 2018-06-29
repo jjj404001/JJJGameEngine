@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include "OpenGL_functions.h"
 #include "Timer.h"
+#include "Color.h"
 
 #define CLASS_NAME "JJJsEngine"
 
@@ -18,7 +19,7 @@ class GLWindow
 	MSG Message_ = {};
 	WNDCLASS WndClass_ = {};
 	POINTS MousePos_ = {};
-
+	Color clear_color_;
 
 	PIXELFORMATDESCRIPTOR PFD_ = {};
 	int PFDID_ = NULL;
@@ -48,6 +49,7 @@ public:
 	bool Create_Old_Context();
 	bool Create_Context(const Attributes input_attrib, GLWindow& fake);
 	bool Destroy_Old_Context();
+	void PrintFPS(double input_duration);
 
 	bool InitOpenGL();
 
