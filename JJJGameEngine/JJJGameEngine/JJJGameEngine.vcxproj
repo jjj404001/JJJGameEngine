@@ -149,11 +149,13 @@
   <ItemGroup>
     <ClCompile Include="GLWindow.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Attributes.h" />
     <ClInclude Include="GLWindow.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="JJJGameEngine.rc" />

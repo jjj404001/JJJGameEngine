@@ -22,11 +22,22 @@ int main()
 	// Set attrib
 	Attributes attributes(main_opengl.major_version, main_opengl.minor_version);
 
+	
 	main_opengl.Create_Context(attributes, fake_window);
 
 
 
 	SetActiveWindow(main_opengl.GetHWND());
+	main_opengl.GetFunctions().wglSwapIntervalEXT(0);
+
+
+	const auto version = reinterpret_cast<const char*>(glGetString(GL_VERSION));
+
+	std::cout << version << std::endl;
+	while (!main_opengl.quit)
+	{
+		main_opengl.Update();
+	}
 
 
 	return 0;
