@@ -77,13 +77,21 @@ bool GLWindow::Create_Context(const Attributes input_attrib, GLWindow& fake)
 
 	device_context = GetDC(hWnd);
 
+	PFNWGLCHOOSEPIXELFORMATARBPROC wglChoosePixelFormatARB = nullptr;
+	wglChoosePixelFormatARB = reinterpret_cast<PFNWGLCHOOSEPIXELFORMATARBPROC>(wglGetProcAddress("wglChoosePixelFormatARB"));
+	if (wglChoosePixelFormatARB == nullptr) {
+		//Check.
+	}
 
 
-	std::cout << wglGetExtensionsStringARB() << std::endl;
-	
-	/*const bool status = wglChoosePixelFormatARB(device_context, input_attrib.pixelAttribs, NULL, 1, &fake.pixelFormatID, &fake.numFormats);
+	PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB = nullptr;
+	wglCreateContextAttribsARB = reinterpret_cast<PFNWGLCREATECONTEXTATTRIBSARBPROC>(wglGetProcAddress("wglCreateContextAttribsARB"));
+	if (wglCreateContextAttribsARB == nullptr) {
+		//Check.
+	}
 
 
+	const bool status = wglChoosePixelFormatARB(device_context, input_attrib.pixelAttribs, nullptr, 1, &fake.pixelFormatID, &fake.numFormats);
 
 	if (!status || fake.numFormats == 0)
 		return true;
@@ -98,7 +106,7 @@ bool GLWindow::Create_Context(const Attributes input_attrib, GLWindow& fake)
 
 	rendering_context = wglCreateContextAttribsARB(device_context, 0, input_attrib.contextAttribs);
 	if (rendering_context == nullptr)
-		return 1;
+		return true;
 
 
 	fake.Destroy_Old_Context();
@@ -107,7 +115,8 @@ bool GLWindow::Create_Context(const Attributes input_attrib, GLWindow& fake)
 		return false;
 
 
-	ShowWindow(hWnd, nCmdShow);*/
+	ShowWindow(hWnd, nCmdShow);
+
 
 
 	return true;

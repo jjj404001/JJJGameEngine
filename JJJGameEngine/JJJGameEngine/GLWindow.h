@@ -8,7 +8,7 @@ struct Attributes;
 class GLWindow
 {
 	HINSTANCE hInstance = nullptr;
-	int nCmdShow = 0;
+	int nCmdShow = SW_SHOWNORMAL;
 
 	HWND hWnd = nullptr;
 	HDC device_context = nullptr;
@@ -34,4 +34,6 @@ public:
 	bool Create_Old_Context();
 	bool Create_Context(const Attributes input_attrib, GLWindow& fake);
 	bool Destroy_Old_Context();
+
+	HWND& GetHWND() { return hWnd; };
 };

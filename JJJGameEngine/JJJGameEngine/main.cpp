@@ -24,5 +24,10 @@ int main()
 
 	main_opengl.Create_Context(attributes, fake_window);
 
+
+
+	SetActiveWindow(main_opengl.GetHWND());
+
+
 	return 0;
 }
