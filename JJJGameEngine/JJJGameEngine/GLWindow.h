@@ -49,9 +49,15 @@ public:
 	bool Create_Context(const Attributes input_attrib, GLWindow& fake);
 	bool Destroy_Old_Context();
 
+	void StartClock();
+	void EndClockAndPrintFPS();
+
 	bool InitOpenGL();
 
 	void Update();
+	void Render();
+
+	void ResizeOpenGLViewport();
 
 	HWND& GetHWND() { return hWnd_; }
 	OpenGLFunctions& GetFunctions() { return opengl_functions_; }

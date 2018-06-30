@@ -125,43 +125,13 @@ bool GLWindow::Destroy_Old_Context()
 	return true;
 }
 
-bool GLWindow::InitOpenGL()
-{
-	opengl_functions_.InitOpenGLFunctions();
-
-	return true;
-}
-
-void GLWindow::Update()
+void GLWindow::StartClock()
 {
 	timer.Clock_Start();
+}
 
-	if (vsync_on)
-		opengl_functions_.wglSwapIntervalEXT(1);
-	else
-		opengl_functions_.wglSwapIntervalEXT(0);
-
-
-
-
-
-
-	if (PeekMessage(&Message_, nullptr, 0, 0, PM_REMOVE))
-	{
-		TranslateMessage(&Message_);
-		DispatchMessage(&Message_);
-	}
-
-
-
-	//graphic.SetPolyMode(GL_LINE);
-	//glPolygonMode(GL_FRONT_AND_BACK, graphic.GetPolyMode());
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	glClearColor(GREEN);
-	glClear(GL_COLOR_BUFFER_BIT);
-	SwapBuffers(device_context_);
-
-
+void GLWindow::EndClockAndPrintFPS()
+{
 	const auto duration = timer.Clock_End();
 
 	ellapsed_time += duration;
@@ -186,6 +156,51 @@ void GLWindow::Update()
 	}
 }
 
+bool GLWindow::InitOpenGL()
+{
+	opengl_functions_.InitOpenGLFunctions();
+
+	return true;
+}
+
+void GLWindow::Update()
+{
+	if (PeekMessage(&Message_, nullptr, 0, 0, PM_REMOVE))
+	{
+		TranslateMessage(&Message_);
+		DispatchMessage(&Message_);
+	}
+
+
+
+	
+}
+
+void GLWindow::Render()
+{
+	//graphic.SetPolyMode(GL_LINE);
+	//glPolygonMode(GL_FRONT_AND_BACK, graphic.GetPolyMode());
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glClearColor(GREEN);
+	glClear(GL_COLOR_BUFFER_BIT);
+	SwapBuffers(device_context_);
+}
+
+void GLWindow::ResizeOpenGLViewport()
+{
+	if (hWnd_ == nullptr)
+		return;
+
+	RECT rRect;
+
+	// Extend
+	GetClientRect(hWnd_, &rRect);
+
+	glViewport(-1, -1, rRect.right, rRect.bottom); // Set viewport
+	// deprecated in 4.0 : glOrtho(0, 0, rRect.right, rRect.top, 1, -1);
+	// Use orthogonal matrix inside shader.
+	// deprecated in 4.0 : glMatrixMode(GL_PROJECTION);
+}
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {

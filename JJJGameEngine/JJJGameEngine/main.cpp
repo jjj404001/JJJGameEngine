@@ -28,15 +28,16 @@ int main()
 
 
 	SetActiveWindow(main_opengl.GetHWND());
-	main_opengl.GetFunctions().wglSwapIntervalEXT(0);
+	main_opengl.GetFunctions().wglSwapIntervalEXT(true);
 
 
 	const auto version = reinterpret_cast<const char*>(glGetString(GL_VERSION));
-
 	std::cout << version << std::endl;
 	while (!main_opengl.quit)
 	{
+		main_opengl.StartClock();
 		main_opengl.Update();
+		main_opengl.EndClockAndPrintFPS();
 	}
 
 
