@@ -56,6 +56,7 @@ public:
 
 	bool InitOpenGL();
 
+	void Initialize();
 	void Update();
 	void Render();
 

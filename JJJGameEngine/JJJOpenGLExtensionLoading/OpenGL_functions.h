@@ -5,6 +5,7 @@
 #include "wglext.h"
 
 
+
 struct OpenGLFunctions
 {
 	// Windows
@@ -31,11 +32,8 @@ struct OpenGLFunctions
 	PFNGLGENVERTEXARRAYSPROC glGenVertexArrays = nullptr;
 	PFNGLBINDVERTEXARRAYPROC glBindVertexArray = nullptr;
 
-	// GL drawing
-	PFNGLDRAWARRAYSEXTPROC glDrawArrays = nullptr;
-
-	// GL point size
-	PFNGLPOINTSIZEXOESPROC glPointSize = nullptr;
+	// GL drawing extension
+	//PFNGLDRAWARRAYSEXTPROC glDrawArraysEXT = nullptr;
 
 
 	void InitOpenGLFunctions();
