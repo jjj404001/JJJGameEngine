@@ -87,13 +87,7 @@ void OpenGLFunctions::InitOpenGLFunctions()
 
 
 	// GL drawing
-	glDrawArrays = reinterpret_cast<PFNGLDRAWARRAYSEXTPROC>(wglGetProcAddress("glDrawArrays"));
-	if (glDrawArrays == nullptr)
-		assert(!"glDrawArrays not initialized.");
-
-
-	// GL point size
-	glPointSize = reinterpret_cast<PFNGLPOINTSIZEXOESPROC>(wglGetProcAddress("glPointSize"));
-	if (glPointSize == nullptr)
-		assert(!"glPointSize not initialized.");
+	//glDrawArraysEXT = reinterpret_cast<PFNGLDRAWARRAYSEXTPROC>(wglGetProcAddress("glDrawArraysEXT"));
+	//if (glDrawArraysEXT == nullptr)
+	//	assert(!"glDrawArraysEXT not initialized.");
 }

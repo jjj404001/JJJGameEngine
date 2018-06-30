@@ -2,8 +2,10 @@
 #include "resource.h"
 #include "Attributes.h"
 #include "OpenGL_functions.h"
+#include "ShaderMap.h"
 #include <iostream>
 #include <string>
+
 
 
 // Prototype
@@ -162,6 +164,33 @@ bool GLWindow::InitOpenGL()
 	return true;
 }
 
+void GLWindow::Initialize()
+{
+	GLWindow fake_window;
+
+#define NOT_FAKE false
+#define FAKE true
+
+	Register_OpenGL_Class(NOT_FAKE);
+	fake_window.Register_OpenGL_Class(FAKE);
+	fake_window.Create_Old_Context();
+
+	// Set attrib
+	const Attributes attributes(major_version, minor_version);
+
+
+	Create_Context(attributes, fake_window);
+
+
+
+	SetActiveWindow(GetHWND());
+	GetFunctions().wglSwapIntervalEXT(true);
+
+
+	const auto version = reinterpret_cast<const char*>(glGetString(GL_VERSION));
+	std::cout << version << std::endl;
+}
+
 void GLWindow::Update()
 {
 	if (PeekMessage(&Message_, nullptr, 0, 0, PM_REMOVE))
@@ -182,6 +211,11 @@ void GLWindow::Render()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glClearColor(clear_color_.Red, clear_color_.Green, clear_color_.Blue, clear_color_.Alpha);
 	glClear(GL_COLOR_BUFFER_BIT);
+
+
+
+
+
 	SwapBuffers(device_context_);
 }
 

@@ -4,33 +4,13 @@
 #include "GLWindow.h"
 #include "Attributes.h"
 
-#define NOT_FAKE false
-#define FAKE true
+
 
 GLWindow main_opengl;
 int main()
 {
-	GLWindow fake_window;
-
 	
-	main_opengl.Register_OpenGL_Class(NOT_FAKE);
-	fake_window.Register_OpenGL_Class(FAKE);
-	fake_window.Create_Old_Context();
-
-	// Set attrib
-	const Attributes attributes(main_opengl.major_version, main_opengl.minor_version);
-
-	
-	main_opengl.Create_Context(attributes, fake_window);
-
-
-
-	SetActiveWindow(main_opengl.GetHWND());
-	main_opengl.GetFunctions().wglSwapIntervalEXT(true);
-
-
-	const auto version = reinterpret_cast<const char*>(glGetString(GL_VERSION));
-	std::cout << version << std::endl;
+	main_opengl.Initialize();
 
 	while (!main_opengl.quit)
 	{
