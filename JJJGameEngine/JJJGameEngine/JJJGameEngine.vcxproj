@@ -76,7 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)JJJGraphicsEngine;$(SolutionDir)MathLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)JJJOpenGLExtensionLoading;$(SolutionDir)JJJGraphicsEngine;$(SolutionDir)MathLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>OpenGL32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -91,7 +91,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)JJJGraphicsEngine;$(SolutionDir)MathLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)JJJOpenGLExtensionLoading;$(SolutionDir)JJJGraphicsEngine;$(SolutionDir)MathLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>OpenGL32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -108,7 +108,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)JJJGraphicsEngine;$(SolutionDir)MathLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)JJJOpenGLExtensionLoading;$(SolutionDir)JJJGraphicsEngine;$(SolutionDir)MathLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -127,7 +127,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)JJJGraphicsEngine;$(SolutionDir)MathLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)JJJOpenGLExtensionLoading;$(SolutionDir)JJJGraphicsEngine;$(SolutionDir)MathLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -141,6 +141,9 @@
   <ItemGroup>
     <ProjectReference Include="..\JJJGraphicsEngine\JJJGraphicsEngine.vcxproj">
       <Project>{7d9f6967-2fd3-46d2-958a-b5a3802358a0}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\JJJOpenGLEXtensionLoading\JJJOpenGLEXtensionLoading.vcxproj">
+      <Project>{83ab87ca-625f-4381-aaac-2561f8774e0a}</Project>
     </ProjectReference>
     <ProjectReference Include="..\MathLibrary\MathLibrary.vcxproj">
       <Project>{4fc08314-3a22-40eb-852c-efbf09048220}</Project>

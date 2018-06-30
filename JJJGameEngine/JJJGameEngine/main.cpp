@@ -1,7 +1,5 @@
 #include "Affine2d.hpp"
 #include <iostream>
-#include "Vector2.hpp"
-#include  "Quaternion.h"
 #include <OpenGL_functions.h>
 #include "GLWindow.h"
 #include "Attributes.h"
@@ -28,7 +26,7 @@ int main()
 
 
 	SetActiveWindow(main_opengl.GetHWND());
-	main_opengl.GetFunctions().wglSwapIntervalEXT(0);
+	main_opengl.GetFunctions().wglSwapIntervalEXT(true);
 
 
 	const auto version = reinterpret_cast<const char*>(glGetString(GL_VERSION));
@@ -36,7 +34,9 @@ int main()
 
 	while (!main_opengl.quit)
 	{
+		main_opengl.StartClock();
 		main_opengl.Update();
+		main_opengl.EndClockAndPrintFPS();
 	}
 
 

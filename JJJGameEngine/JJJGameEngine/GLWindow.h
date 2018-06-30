@@ -19,7 +19,7 @@ class GLWindow
 	MSG Message_ = {};
 	WNDCLASS WndClass_ = {};
 	POINTS MousePos_ = {};
-	Color clear_color_;
+	Color clear_color_{};
 
 	PIXELFORMATDESCRIPTOR PFD_ = {};
 	int PFDID_ = NULL;
@@ -49,11 +49,17 @@ public:
 	bool Create_Old_Context();
 	bool Create_Context(const Attributes input_attrib, GLWindow& fake);
 	bool Destroy_Old_Context();
-	void PrintFPS(double input_duration);
+	void Print_FPS(double input_duration);
+
+	void StartClock();
+	void EndClockAndPrintFPS();
 
 	bool InitOpenGL();
 
 	void Update();
+	void Render();
+
+	void ResizeOpenGLViewport();
 
 	HWND& GetHWND() { return hWnd_; }
 	OpenGLFunctions& GetFunctions() { return opengl_functions_; }

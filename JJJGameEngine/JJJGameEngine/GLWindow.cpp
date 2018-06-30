@@ -124,12 +124,19 @@ bool GLWindow::Destroy_Old_Context()
 	return true;
 }
 
-void GLWindow::PrintFPS(double input_duration)
+void GLWindow::StartClock()
 {
-	ellapsed_time += input_duration;
+	timer.Clock_Start();
+}
+
+void GLWindow::EndClockAndPrintFPS()
+{
+	const auto duration = timer.Clock_End();
+
+	ellapsed_time += duration;
 	fps++;
 
-	const auto name = CLASS_NAME + std::to_string(previous_fps);
+	const auto name = CLASS_NAME + (" FPS : " + std::to_string(previous_fps));
 	const auto name_additional = " Ellapsed time between frame : " + std::to_string(previous_ellapsed_time);
 
 
@@ -157,18 +164,6 @@ bool GLWindow::InitOpenGL()
 
 void GLWindow::Update()
 {
-	timer.Clock_Start();
-
-	if (vsync_on)
-		opengl_functions_.wglSwapIntervalEXT(1);
-	else
-		opengl_functions_.wglSwapIntervalEXT(0);
-
-
-
-
-
-
 	if (PeekMessage(&Message_, nullptr, 0, 0, PM_REMOVE))
 	{
 		TranslateMessage(&Message_);
@@ -177,18 +172,34 @@ void GLWindow::Update()
 
 
 
+	Render();
+}
+
+void GLWindow::Render()
+{
 	//graphic.SetPolyMode(GL_LINE);
 	//glPolygonMode(GL_FRONT_AND_BACK, graphic.GetPolyMode());
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glClearColor(clear_color_.Red, clear_color_.Green, clear_color_.Blue, clear_color_.Alpha);
 	glClear(GL_COLOR_BUFFER_BIT);
 	SwapBuffers(device_context_);
-
-
-	const auto duration = timer.Clock_End();
-	PrintFPS(duration);
 }
 
+void GLWindow::ResizeOpenGLViewport()
+{
+	if (hWnd_ == nullptr)
+		return;
+
+	RECT rRect;
+
+	// Extend
+	GetClientRect(hWnd_, &rRect);
+
+	glViewport(-1, -1, rRect.right, rRect.bottom); // Set viewport
+	// deprecated in 4.0 : glOrtho(0, 0, rRect.right, rRect.top, 1, -1);
+	// Use orthogonal matrix inside shader.
+	// deprecated in 4.0 : glMatrixMode(GL_PROJECTION);
+}
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
