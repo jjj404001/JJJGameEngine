@@ -1,9 +1,10 @@
+#include <OpenGL_functions.h>
+#include <iostream>
+#include <string>
+
 #include "GLWindow.h"
 #include "resource.h"
 #include "Attributes.h"
-#include "OpenGL_functions.h"
-#include <iostream>
-#include <string>
 
 #define GREEN 0.0f, 0.586f, 0.0f, 1.0f
 // Prototype
@@ -166,7 +167,7 @@ void GLWindow::Update()
 	ellapsed_time += duration;
 	fps++;
 
-	const auto name = CLASS_NAME + std::to_string(previous_fps);
+	const auto name = CLASS_NAME + (" FPS : " + std::to_string(previous_fps));
 	const auto name_additional = " Ellapsed time between frame : " + std::to_string(previous_ellapsed_time);
 
 

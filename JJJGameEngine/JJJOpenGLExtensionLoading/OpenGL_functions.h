@@ -5,12 +5,12 @@
 #include "wglext.h"
 
 
-
 struct OpenGLFunctions
 {
 	PFNWGLCHOOSEPIXELFORMATARBPROC wglChoosePixelFormatARB = nullptr;
 	PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB = nullptr;
 	PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT = nullptr;
+	PFNWGLGETSWAPINTERVALEXTPROC wglGetSwapIntervalEXT = nullptr;
 
 
 
