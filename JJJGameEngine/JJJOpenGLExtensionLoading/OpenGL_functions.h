@@ -7,11 +7,35 @@
 
 struct OpenGLFunctions
 {
+	// Windows
 	PFNWGLCHOOSEPIXELFORMATARBPROC wglChoosePixelFormatARB = nullptr;
 	PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB = nullptr;
 	PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT = nullptr;
 	PFNWGLGETSWAPINTERVALEXTPROC wglGetSwapIntervalEXT = nullptr;
+	// GL buffers
+	PFNGLCLEARBUFFERFVPROC glClearBufferfv = nullptr;
+	PFNGLCLEARBUFFERIVPROC glClearBufferiv = nullptr;
+	PFNGLCLEARBUFFERUIVPROC glClearBufferuiv = nullptr;
+	PFNGLCLEARBUFFERFIPROC glClearBufferfi = nullptr;
+	// GL shaders
+	PFNGLCREATESHADERPROC glCreateShader = nullptr;
+	PFNGLSHADERSOURCEPROC glShaderSource = nullptr;
+	PFNGLCOMPILESHADERPROC glCompileShader = nullptr;
+	PFNGLCREATEPROGRAMPROC glCreateProgram = nullptr;
+	PFNGLATTACHSHADERPROC glAttachShader = nullptr;
+	PFNGLLINKPROGRAMPROC glLinkProgram = nullptr;
+	PFNGLDELETESHADERPROC glDeleteShader = nullptr;
+	PFNGLUSEPROGRAMPROC glUseProgram = nullptr;
 
+	// GL vertex arrays
+	PFNGLGENVERTEXARRAYSPROC glGenVertexArrays = nullptr;
+	PFNGLBINDVERTEXARRAYPROC glBindVertexArray = nullptr;
+
+	// GL drawing
+	PFNGLDRAWARRAYSEXTPROC glDrawArrays = nullptr;
+
+	// GL point size
+	PFNGLPOINTSIZEXOESPROC glPointSize = nullptr;
 
 
 	void InitOpenGLFunctions();
