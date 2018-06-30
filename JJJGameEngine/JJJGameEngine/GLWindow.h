@@ -3,6 +3,7 @@
 #include "OpenGL_functions.h"
 #include "Timer.h"
 #include "Color.h"
+#include "ShaderMap.h"
 
 #define CLASS_NAME "JJJsEngine"
 
@@ -29,6 +30,7 @@ class GLWindow
 
 	Timer timer;
 	OpenGLFunctions opengl_functions_;
+	ShaderMap shader_map_;
 
 
 	// Timing numbers.

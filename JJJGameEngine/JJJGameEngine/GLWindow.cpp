@@ -189,6 +189,8 @@ void GLWindow::Initialize()
 
 	const auto version = reinterpret_cast<const char*>(glGetString(GL_VERSION));
 	std::cout << version << std::endl;
+
+	shader_map_.LoadShader("Shader/White_Blank.glsl");
 }
 
 void GLWindow::Update()
@@ -199,6 +201,7 @@ void GLWindow::Update()
 		DispatchMessage(&Message_);
 	}
 
+	std::cout << shader_map_.find("White_Blank");
 
 
 	Render();

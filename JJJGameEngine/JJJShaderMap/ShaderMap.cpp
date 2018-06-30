@@ -2,6 +2,7 @@
 #include <fstream>
 #include <cassert>
 #include <iostream>
+#include <filesystem>
 
 void ShaderMap::CleanInput(char* input_buffer, size_t length)
 {
@@ -19,6 +20,42 @@ bool ShaderMap::CheckValidate(char input_char)
 	invalid = invalid || input_char == '\t';
 
 	return !invalid;
+}
+
+std::string ShaderMap::PathToName(std::string input_path)
+{
+	auto result = input_path;
+
+
+	// Erase file path.
+	auto end = 0;
+	for(auto i : result)
+	{
+		if (i == '/')
+		{
+			++end;
+			break;
+		}
+
+		++end;
+	}
+	result.erase(0, end);
+
+
+
+	// Erase file extension.
+	auto start = 0;
+	for (auto i : result)
+	{
+		if (i == '.')
+			break;
+
+
+		++start;
+	}
+	result.erase(start, result.back());
+
+	return  result;
 }
 
 Shader* ShaderMap::begin()
@@ -44,6 +81,12 @@ void ShaderMap::LoadShader(std::string file_path)
 	// And return to beginning of the file.
 	infile.seekg(0, std::ifstream::beg);
 
+
+	// Extract name from file path.
+	std::string shader_name = PathToName(file_path);
+
+
+
 	std::cout << "Reading " << length << " characters" << std::endl;
 	std::cout << "For " << file_path << " shader file." << std::endl;
 	// read data as a block:
@@ -52,7 +95,7 @@ void ShaderMap::LoadShader(std::string file_path)
 	CleanInput(buffer, length);
 
 
-	const Shader new_shader(file_path, buffer);
+	const Shader new_shader(shader_name, buffer);
 	push_back(new_shader);
 }
 
@@ -85,4 +128,15 @@ void ShaderMap::push_back(Shader input_shader)
 
 	// Push back.
 	shader_map_[previous_length] = input_shader;
+}
+
+Shader* ShaderMap::find(const std::string input_shader_name)
+{
+	for (auto i = 0; i < size_; ++i)
+	{
+		if (shader_map_[i].name == input_shader_name)
+			return &shader_map_[i];
+	}
+
+	return nullptr;
 }
