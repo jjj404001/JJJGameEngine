@@ -85,7 +85,7 @@ bool GLWindow::Create_Context(const Attributes input_attrib, GLWindow& fake)
 
 
 	// If faile to choose pixelformat or number of pixelformat is 0.
-	if (!opengl_functions_.wglChoosePixelFormatARB(device_context_, input_attrib.pixelAttribs, nullptr, 1, &fake.pixelFormatID_, &fake.numFormats_) || fake.numFormats_ == 0)
+	if (!graphics_.opengl_functions_.wglChoosePixelFormatARB(device_context_, input_attrib.pixelAttribs, nullptr, 1, &fake.pixelFormatID_, &fake.numFormats_) || fake.numFormats_ == 0)
 		return true;
 
 
@@ -96,7 +96,7 @@ bool GLWindow::Create_Context(const Attributes input_attrib, GLWindow& fake)
 
 
 
-	rendering_context_ = opengl_functions_.wglCreateContextAttribsARB(device_context_, 0, input_attrib.contextAttribs);
+	rendering_context_ = graphics_.opengl_functions_.wglCreateContextAttribsARB(device_context_, 0, input_attrib.contextAttribs);
 	if (rendering_context_ == nullptr)
 		return true;
 
@@ -159,7 +159,7 @@ void GLWindow::EndClockAndPrintFPS()
 
 bool GLWindow::InitOpenGL()
 {
-	opengl_functions_.InitOpenGLFunctions();
+	graphics_.opengl_functions_.InitOpenGLFunctions();
 
 	return true;
 }
@@ -184,13 +184,7 @@ void GLWindow::Initialize()
 
 
 	SetActiveWindow(GetHWND());
-	GetFunctions().wglSwapIntervalEXT(true);
-
-
-	const auto version = reinterpret_cast<const char*>(glGetString(GL_VERSION));
-	std::cout << version << std::endl;
-
-	shader_map_.LoadShader("Shader/White_Blank.glsl");
+	graphics_.Initialize();
 }
 
 void GLWindow::Update()
@@ -201,7 +195,6 @@ void GLWindow::Update()
 		DispatchMessage(&Message_);
 	}
 
-	std::cout << shader_map_.find("White_Blank");
 
 
 	Render();
@@ -212,11 +205,11 @@ void GLWindow::Render()
 	//graphic.SetPolyMode(GL_LINE);
 	//glPolygonMode(GL_FRONT_AND_BACK, graphic.GetPolyMode());
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	glClearColor(clear_color_.Red, clear_color_.Green, clear_color_.Blue, clear_color_.Alpha);
+	glClearColor(graphics_.clear_color_.Red, graphics_.clear_color_.Green, graphics_.clear_color_.Blue, graphics_.clear_color_.Alpha);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 
-
+	graphics_.Update();
 
 
 	SwapBuffers(device_context_);

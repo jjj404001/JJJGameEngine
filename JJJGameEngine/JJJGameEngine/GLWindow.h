@@ -1,9 +1,7 @@
 #pragma once
 #include <Windows.h>
-#include "OpenGL_functions.h"
+#include "Graphics.h"
 #include "Timer.h"
-#include "Color.h"
-#include "ShaderMap.h"
 
 #define CLASS_NAME "JJJsEngine"
 
@@ -20,7 +18,7 @@ class GLWindow
 	MSG Message_ = {};
 	WNDCLASS WndClass_ = {};
 	POINTS MousePos_ = {};
-	Color clear_color_{};
+	
 
 	PIXELFORMATDESCRIPTOR PFD_ = {};
 	int PFDID_ = NULL;
@@ -29,8 +27,8 @@ class GLWindow
 	UINT numFormats_ = 0;
 
 	Timer timer;
-	OpenGLFunctions opengl_functions_;
-	ShaderMap shader_map_;
+
+	Graphics graphics_;
 
 
 	// Timing numbers.
@@ -51,7 +49,7 @@ public:
 	bool Create_Old_Context();
 	bool Create_Context(const Attributes input_attrib, GLWindow& fake);
 	bool Destroy_Old_Context();
-	void Print_FPS(double input_duration);
+
 
 	void StartClock();
 	void EndClockAndPrintFPS();
@@ -65,5 +63,5 @@ public:
 	void ResizeOpenGLViewport();
 
 	HWND& GetHWND() { return hWnd_; }
-	OpenGLFunctions& GetFunctions() { return opengl_functions_; }
+	OpenGLFunctions& GetFunctions() { return graphics_.opengl_functions_; }
 };
