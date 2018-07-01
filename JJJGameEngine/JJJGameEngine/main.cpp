@@ -1,8 +1,5 @@
-#include "Affine2d.hpp"
-#include <iostream>
-#include <OpenGL_functions.h>
 #include "GLWindow.h"
-#include "Attributes.h"
+
 
 
 
@@ -18,6 +15,8 @@ int main()
 		main_opengl.Update();
 		main_opengl.EndClockAndPrintFPS();
 	}
+
+	main_opengl.Close();
 
 
 	return 0;

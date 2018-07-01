@@ -16,4 +16,7 @@ class Graphics
 	void Initialize();
 	void Update();
 	void Free();
+
+
+	void CompileShader(Shader* input_shader);
 };

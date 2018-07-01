@@ -3,6 +3,7 @@
 #include <cassert>
 #include <iostream>
 #include <filesystem>
+#include "OpenGL_functions.h"
 
 void ShaderMap::CleanInput(char* input_buffer, size_t length)
 {
@@ -63,39 +64,59 @@ Shader* ShaderMap::begin()
 	return &shader_map_[0];
 }
 
-void ShaderMap::LoadShader(std::string file_path)
+void ShaderMap::LoadShader(std::string input_name, std::string vertex_file_path, std::string fragment_file_path)
 {
-	// Open shaderfile in read only mode.
-	std::ifstream infile;
-	infile.open(file_path);
+	// Open shaderfile.
+	std::ifstream vertex_infile;
+	std::ifstream fragment_infile;
+	vertex_infile.open(vertex_file_path);
+	fragment_infile.open(fragment_file_path);
 
 
 
-	if(!infile.good())
-		assert(!"Error occerred during opening file.");
+	if(!vertex_infile.good())
+		assert(!"Error occerred during opening vertex shader file.");
+
+	if (!fragment_infile.good())
+		assert(!"Error occerred during opening fragment shader file.");
 
 	// Go to end of file.
-	infile.seekg(0, std::ifstream::end);
+	vertex_infile.seekg(0, std::ifstream::end);
 	// Get length
-	const auto length = infile.tellg();
+	const auto vertex_length = vertex_infile.tellg();
 	// And return to beginning of the file.
-	infile.seekg(0, std::ifstream::beg);
+	vertex_infile.seekg(0, std::ifstream::beg);
+
+
+	// Go to end of file.
+	fragment_infile.seekg(0, std::ifstream::end);
+	// Get length
+	const auto fragment_length = fragment_infile.tellg();
+	// And return to beginning of the file.
+	fragment_infile.seekg(0, std::ifstream::beg);
+
 
 
 	// Extract name from file path.
-	std::string shader_name = PathToName(file_path);
+	std::string shader_name = input_name;
 
 
 
-	std::cout << "Reading " << length << " characters" << std::endl;
-	std::cout << "For " << file_path << " shader file." << std::endl;
+	std::cout << "Reading " << vertex_length << " characters" << std::endl;
+	std::cout << "For " << vertex_file_path << " shader file." << std::endl;
 	// read data as a block:
-	auto* buffer = new char[length];
-	infile.read(buffer, length);
-	CleanInput(buffer, length);
+	auto* vertex_shader_buffer = new char[vertex_length];
+	vertex_infile.read(vertex_shader_buffer, vertex_length);
+	CleanInput(vertex_shader_buffer, vertex_length);
 
+	std::cout << "Reading " << fragment_length << " characters" << std::endl;
+	std::cout << "For " << fragment_file_path << " shader file." << std::endl;
+	// read data as a block:
+	auto* fragment_shader_buffer = new char[fragment_length];
+	fragment_infile.read(fragment_shader_buffer, fragment_length);
+	CleanInput(fragment_shader_buffer, fragment_length);
 
-	const Shader new_shader(shader_name, buffer);
+	const Shader new_shader(shader_name, vertex_shader_buffer, fragment_shader_buffer);
 	push_back(new_shader);
 }
 

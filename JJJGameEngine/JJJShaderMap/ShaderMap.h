@@ -14,7 +14,7 @@ class ShaderMap
 
 	Shader* begin();
 public:
-	void LoadShader(std::string file_path);
+	void LoadShader(std::string input_name, std::string vertex_file_path, std::string fragment_file_path);
 	size_t Size() const;
 	void push_back(Shader input_shader);
 	Shader* find(std::string input_shader_name);

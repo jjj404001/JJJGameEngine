@@ -2,7 +2,6 @@
 #include "resource.h"
 #include "Attributes.h"
 #include "OpenGL_functions.h"
-#include "ShaderMap.h"
 #include <iostream>
 #include <string>
 
@@ -109,7 +108,7 @@ bool GLWindow::Create_Context(const Attributes input_attrib, GLWindow& fake)
 
 	ShowWindow(hWnd_, nCmdShow_);
 
-
+	
 
 	return true;
 }
@@ -196,7 +195,6 @@ void GLWindow::Update()
 	}
 
 
-
 	Render();
 }
 
@@ -205,14 +203,20 @@ void GLWindow::Render()
 	//graphic.SetPolyMode(GL_LINE);
 	//glPolygonMode(GL_FRONT_AND_BACK, graphic.GetPolyMode());
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	glClearColor(graphics_.clear_color_.Red, graphics_.clear_color_.Green, graphics_.clear_color_.Blue, graphics_.clear_color_.Alpha);
-	glClear(GL_COLOR_BUFFER_BIT);
+	GLfloat red[] = { 1.0f, 0.0f, 0.0f, 1.0f};
+	graphics_.opengl_functions_.glClearBufferfv(GL_COLOR, 0, red);
 
 
 	graphics_.Update();
 
 
 	SwapBuffers(device_context_);
+	
+}
+
+void GLWindow::Close()
+{
+	graphics_.Free();
 }
 
 void GLWindow::ResizeOpenGLViewport()

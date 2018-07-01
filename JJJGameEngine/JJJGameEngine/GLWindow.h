@@ -59,6 +59,7 @@ public:
 	void Initialize();
 	void Update();
 	void Render();
+	void Close();
 
 	void ResizeOpenGLViewport();
 
