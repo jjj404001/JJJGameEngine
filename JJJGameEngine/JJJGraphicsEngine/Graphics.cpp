@@ -13,21 +13,27 @@ void Graphics::Initialize()
 	shader_map_.LoadShader("First shader","Shader/FirstVertex.glsl", "Shader/FirstFragment.glsl");
 	CompileShader(shader_map_.find("First shader"));
 
+	shader_map_.LoadShader("Triangle shader", "Shader/Triangle_Vertex.glsl", "Shader/Triangle_Fragment.glsl");
+	CompileShader(shader_map_.find("Triangle shader"));
+
 	GLuint VAO;
 	opengl_functions_.glGenVertexArrays(1, &VAO);
 	opengl_functions_.glBindVertexArray(VAO);
+	// Pixel size
+	//glPointSize(50.0f);
 }
 
 void Graphics::Update()
 {
-	opengl_functions_.glUseProgram(shader_map_.find("First shader")->program_);
+	opengl_functions_.glUseProgram(shader_map_.find("Triangle shader")->program_);
 
-	glDrawArrays(GL_POINTS, 0, 1);
+	glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
 void Graphics::Free()
 {
 	opengl_functions_.glDeleteShader(shader_map_.find("First shader")->program_);
+	opengl_functions_.glDeleteShader(shader_map_.find("Triangle shader")->program_);
 }
 
 void Graphics::CompileShader(Shader* input_shader)

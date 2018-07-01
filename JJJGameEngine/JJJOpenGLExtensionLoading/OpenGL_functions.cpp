@@ -86,6 +86,7 @@ void OpenGLFunctions::InitOpenGLFunctions()
 		assert(!"glBindVertexArray not initialized.");
 
 
+
 	// GL drawing
 	//glDrawArraysEXT = reinterpret_cast<PFNGLDRAWARRAYSEXTPROC>(wglGetProcAddress("glDrawArraysEXT"));
 	//if (glDrawArraysEXT == nullptr)

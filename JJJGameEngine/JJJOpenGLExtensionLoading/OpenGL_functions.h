@@ -32,6 +32,8 @@ struct OpenGLFunctions
 	PFNGLGENVERTEXARRAYSPROC glGenVertexArrays = nullptr;
 	PFNGLBINDVERTEXARRAYPROC glBindVertexArray = nullptr;
 
+
+
 	// GL drawing extension
 	//PFNGLDRAWARRAYSEXTPROC glDrawArraysEXT = nullptr;
 
