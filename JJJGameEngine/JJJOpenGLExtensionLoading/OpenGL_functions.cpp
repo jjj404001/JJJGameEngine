@@ -71,9 +71,17 @@ void OpenGLFunctions::InitOpenGLFunctions()
 	if (glDeleteShader == nullptr)
 		assert(!"glDeleteShader not initialized.");
 
-	 glUseProgram = reinterpret_cast<PFNGLUSEPROGRAMPROC>(wglGetProcAddress("glUseProgram"));
+	glUseProgram = reinterpret_cast<PFNGLUSEPROGRAMPROC>(wglGetProcAddress("glUseProgram"));
 	if (glUseProgram == nullptr)
 		assert(!"glUseProgram not initialized.");
+
+	glGetShaderiv = reinterpret_cast<PFNGLGETSHADERIVPROC>(wglGetProcAddress("glGetShaderiv"));
+	if (glGetShaderiv == nullptr)
+		assert(!"glGetShaderiv not initialized.");
+
+	glGetShaderInfoLog = reinterpret_cast<PFNGLGETSHADERINFOLOGPROC>(wglGetProcAddress("glGetShaderInfoLog"));
+	if (glGetShaderInfoLog == nullptr)
+		assert(!"glGetShaderInfoLog not initialized.");
 
 
 	// Vertex arrays

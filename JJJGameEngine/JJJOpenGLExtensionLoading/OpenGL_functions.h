@@ -27,12 +27,14 @@ struct OpenGLFunctions
 	PFNGLLINKPROGRAMPROC glLinkProgram = nullptr;
 	PFNGLDELETESHADERPROC glDeleteShader = nullptr;
 	PFNGLUSEPROGRAMPROC glUseProgram = nullptr;
+	PFNGLGETSHADERIVPROC glGetShaderiv = nullptr;
+	PFNGLGETSHADERINFOLOGPROC glGetShaderInfoLog = nullptr;
+
 
 	// GL vertex arrays
 	PFNGLGENVERTEXARRAYSPROC glGenVertexArrays = nullptr;
 	PFNGLBINDVERTEXARRAYPROC glBindVertexArray = nullptr;
-
-
+	
 
 	// GL drawing extension
 	//PFNGLDRAWARRAYSEXTPROC glDrawArraysEXT = nullptr;

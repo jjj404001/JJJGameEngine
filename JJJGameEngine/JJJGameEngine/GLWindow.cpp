@@ -202,7 +202,7 @@ void GLWindow::Render()
 {
 	//graphic.SetPolyMode(GL_LINE);
 	//glPolygonMode(GL_FRONT_AND_BACK, graphic.GetPolyMode());
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
 	GLfloat red[] = { 1.0f, 0.0f, 0.0f, 1.0f};
 	graphics_.opengl_functions_.glClearBufferfv(GL_COLOR, 0, red);
 
