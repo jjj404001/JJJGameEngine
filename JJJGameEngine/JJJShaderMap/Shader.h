@@ -23,6 +23,6 @@ public:
 	ShaderType type = VertexShader;
 
 	Shader();
-	Shader(const ShaderType input_type, const char* input_shader_source);
-	static Shader LoadShader(const ShaderType input_type, const std::string file_path);
+	Shader(ShaderType input_type, const char* input_shader_source);
+	static Shader LoadShader(ShaderType input_type, std::string file_path);
 };

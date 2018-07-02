@@ -1,5 +1,5 @@
 #include "GLWindow.h"
-#include <iostream>
+
 
 #define MS_PER_UPDATE 0.02
 

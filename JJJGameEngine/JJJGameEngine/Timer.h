@@ -5,7 +5,7 @@ class Timer
 {
 	std::chrono::high_resolution_clock::time_point m_clock_start;
 	std::chrono::high_resolution_clock::time_point m_clock_end;
-	std::chrono::duration<double> m_duration;
+	std::chrono::duration<double> m_duration{};
 
 public:
 	void Clock_Start();

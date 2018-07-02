@@ -38,12 +38,12 @@ void Graphics::Update()
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
-void Graphics::Free()
+void Graphics::Free() const
 {
 	opengl_functions_.glDeleteShader(Tesselation_white_shader_.GetProgram());
 }
 
-void Graphics::CompileShaders(ShaderCollection& input_shader_collection)
+void Graphics::CompileShaders(ShaderCollection& input_shader_collection) const
 {
 	// Create program.
 	input_shader_collection.program_ = opengl_functions_.glCreateProgram();

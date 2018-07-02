@@ -95,7 +95,7 @@ bool GLWindow::Create_Context(const Attributes input_attrib, GLWindow& fake)
 
 
 
-	rendering_context_ = graphics_.opengl_functions_.wglCreateContextAttribsARB(device_context_, 0, input_attrib.contextAttribs);
+	rendering_context_ = graphics_.opengl_functions_.wglCreateContextAttribsARB(device_context_, nullptr, input_attrib.contextAttribs);
 	if (rendering_context_ == nullptr)
 		return true;
 
@@ -113,16 +113,12 @@ bool GLWindow::Create_Context(const Attributes input_attrib, GLWindow& fake)
 	return true;
 }
 
-bool GLWindow::Destroy_Old_Context()
+void GLWindow::Destroy_Old_Context() const
 {
 	wglMakeCurrent(nullptr, nullptr);
 	wglDeleteContext(rendering_context_);
 	ReleaseDC(hWnd_, device_context_);
 	DestroyWindow(hWnd_);
-
-
-
-	return true;
 }
 
 void GLWindow::StartClock()
@@ -218,7 +214,7 @@ void GLWindow::Close()
 	graphics_.Free();
 }
 
-void GLWindow::ResizeOpenGLViewport()
+void GLWindow::ResizeOpenGLViewport() const
 {
 	if (hWnd_ == nullptr)
 		return;

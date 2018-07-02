@@ -11,12 +11,12 @@ class Graphics
 	OpenGLFunctions opengl_functions_;
 	ShaderCollection Tesselation_white_shader_;
 
-	Color clear_color_{};
+	Color clear_color_;
 
 	void Initialize();
 	void Update();
-	void Free();
+	void Free() const;
 
 
-	void CompileShaders(ShaderCollection& input_shader_collection);
+	void CompileShaders(ShaderCollection& input_shader_collection) const;
 };

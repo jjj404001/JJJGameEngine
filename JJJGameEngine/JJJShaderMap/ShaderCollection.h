@@ -17,8 +17,8 @@ class ShaderCollection
 
 	static std::string PathToName(std::string input_path);
 
-	Shader* begin();
-	Shader* end();
+	Shader* begin() const;
+	Shader* end() const;
 public:
 
 	size_t Size() const;

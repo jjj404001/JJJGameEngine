@@ -17,7 +17,7 @@ class GLWindow
 	HGLRC rendering_context_ = nullptr;
 	MSG Message_ = {};
 	WNDCLASS WndClass_ = {};
-	POINTS MousePos_ = {};
+	POINTS mouse_pos_ = {};
 	
 
 	PIXELFORMATDESCRIPTOR PFD_ = {};
@@ -50,7 +50,7 @@ public:
 	void Register_OpenGL_Class(bool is_fake);
 	bool Create_Old_Context();
 	bool Create_Context(const Attributes input_attrib, GLWindow& fake);
-	bool Destroy_Old_Context();
+	void Destroy_Old_Context() const;
 
 
 	void StartClock();
@@ -63,7 +63,7 @@ public:
 	void Render();
 	void Close();
 
-	void ResizeOpenGLViewport();
+	void ResizeOpenGLViewport() const;
 
 	HWND& GetHWND() { return hWnd_; }
 	OpenGLFunctions& GetFunctions() { return graphics_.opengl_functions_; }

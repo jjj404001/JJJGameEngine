@@ -1,6 +1,6 @@
 #pragma once
 #include <Windows.h>
-#include <gl/GL.h>
+#include <gl/GL.h> // For glext.h
 #include "glext.h"
 #include "wglext.h"
 
