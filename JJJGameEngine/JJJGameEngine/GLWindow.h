@@ -31,18 +31,20 @@ class GLWindow
 	Graphics graphics_;
 
 
-	// Timing numbers.
-	unsigned int fps = 0;
-	double ellapsed_time = 0.0;
-
-	unsigned int previous_fps = 0;
-	double previous_ellapsed_time = 0.0;
+	
 public:
 	int major_version = 4;
 	int minor_version = 0;
 	bool is_fullscreen = false;
 	bool quit = false;
 	bool vsync_on = true;
+	// Timing numbers.
+	unsigned int fps = 0;
+	double ellapsed_time = 0.0;
+	unsigned int previous_fps = 0;
+	double previous_ellapsed_time = 0.0;
+	double delta_time = 0.0;
+
 
 
 	void Register_OpenGL_Class(bool is_fake);

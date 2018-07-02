@@ -134,15 +134,15 @@ void GLWindow::EndClockAndPrintFPS()
 {
 	const auto duration = timer.Clock_End();
 
+	delta_time = duration;
 	ellapsed_time += duration;
 	fps++;
 
 	const auto name = CLASS_NAME + (" FPS : " + std::to_string(previous_fps));
 	const auto name_additional = " Ellapsed time between frame : " + std::to_string(previous_ellapsed_time);
 
-
+	
 	SetWindowText(hWnd_, (name + name_additional).c_str());
-
 	if (ellapsed_time > 1.0)
 	{
 		std::cout << "FPS  : " << fps << std::endl;
@@ -150,6 +150,8 @@ void GLWindow::EndClockAndPrintFPS()
 
 		previous_fps = fps;
 		previous_ellapsed_time = ellapsed_time;
+
+		
 
 		fps = 0;
 		ellapsed_time = 0.0;
@@ -193,9 +195,6 @@ void GLWindow::Update()
 		TranslateMessage(&Message_);
 		DispatchMessage(&Message_);
 	}
-
-
-	Render();
 }
 
 void GLWindow::Render()
