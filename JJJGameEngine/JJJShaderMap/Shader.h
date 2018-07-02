@@ -3,25 +3,26 @@
 
 class Shader
 {
+	enum ShaderType
+	{
+		VertexShader = 1,
+		TessellationControl,
+		TessellationEvaluation,
+		FragmentShader,
+	};
+
 	friend class Graphics;
-
 	using GLuint = unsigned int;
-	
-	const char* vertex_shader_source_ = nullptr;
-	const char* tesselation_control_shader_source_ = nullptr;
-	const char* tesselation_evaluation_shader_source_ = nullptr;
-	const char* fragment_shader_source_ = nullptr;
+	const char* shader_source_ = nullptr;
 
-	GLuint vertex_shader_ = 0;
-	GLuint tesselation_control_shader_ = 0;
-	GLuint tesselation_evaluation_shader_ = 0;
-	GLuint fragment_shader_ = 0;
 
-	GLuint program_ = 0;
-
+	GLuint shader_ = 0;
+	static void CleanInput(char* input_buffer, size_t length);
+	static bool CheckValidate(char input_char);
 public:
-	std::string name = "default shader";
+	ShaderType type = VertexShader;
+
 	Shader();
-	Shader(std::string input_name, const char* input_vertex_shader_source, const char* input_fragment_shader_source);
-	Shader(std::string input_name, const char* input_vertex_shader_source, const char* tesselation_control_shader_source, const char* tesselation_evaluation_shader_source, const char* input_fragment_shader_source);
+	Shader(const ShaderType input_type, const char* input_shader_source);
+	static Shader LoadShader(const ShaderType input_type, const std::string file_path);
 };

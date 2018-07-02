@@ -120,11 +120,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h" />
-    <ClInclude Include="ShaderMap.h" />
+    <ClInclude Include="ShaderCollection.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="ShaderMap.cpp" />
+    <ClCompile Include="ShaderCollection.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

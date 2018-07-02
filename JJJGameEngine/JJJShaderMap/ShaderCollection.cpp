@@ -1,29 +1,13 @@
-#include "ShaderMap.h"
-#include <fstream>
+#include "ShaderCollection.h"
+
 #include <cassert>
 #include <iostream>
-#include <filesystem>
-#include "OpenGL_functions.h"
 
-void ShaderMap::CleanInput(char* input_buffer, size_t length)
-{
-	// Replace invalide character with NULL.
-	for (size_t i = 0; i < length; ++i)
-		if (CheckValidate(input_buffer[i]))
-			input_buffer[i] = NULL;
-}
 
-bool ShaderMap::CheckValidate(char input_char)
-{
-	bool invalid = 32 <= input_char && input_char <= 126;
 
-	invalid = invalid || input_char == '\n';
-	invalid = invalid || input_char == '\t';
 
-	return !invalid;
-}
 
-std::string ShaderMap::PathToName(std::string input_path)
+std::string ShaderCollection::PathToName(std::string input_path)
 {
 	auto result = input_path;
 
@@ -59,12 +43,19 @@ std::string ShaderMap::PathToName(std::string input_path)
 	return  result;
 }
 
-Shader* ShaderMap::begin()
+Shader* ShaderCollection::begin()
 {
 	return &shader_map_[0];
 }
 
-void ShaderMap::LoadShader(std::string input_name, std::string vertex_file_path, std::string fragment_file_path)
+Shader* ShaderCollection::end()
+{
+	return& shader_map_[size_];
+}
+
+
+/*
+void ShaderCollection::LoadShader(std::string input_name, std::string vertex_file_path, std::string fragment_file_path)
 {
 	// Open shaderfile.
 	std::ifstream vertex_infile;
@@ -120,7 +111,7 @@ void ShaderMap::LoadShader(std::string input_name, std::string vertex_file_path,
 	push_back(new_shader);
 }
 
-void ShaderMap::LoadShader(std::string input_name, std::string vertex_file_path, std::string tess_control_file_path,
+void ShaderCollection::LoadShader(std::string input_name, std::string vertex_file_path, std::string tess_control_file_path,
 	std::string tess_evaluation_file_path, std::string fragment_file_path)
 {
 	// Open shaderfile.
@@ -217,13 +208,13 @@ void ShaderMap::LoadShader(std::string input_name, std::string vertex_file_path,
 	const Shader new_shader(shader_name, vertex_shader_buffer, tess_control_shader_buffer, tess_evaluation_shader_buffer, fragment_shader_buffer);
 	push_back(new_shader);
 }
-
-size_t ShaderMap::Size() const
+*/
+size_t ShaderCollection::Size() const
 {
 	return size_;
 }
 
-void ShaderMap::push_back(Shader input_shader)
+void ShaderCollection::push_back(Shader input_shader)
 {
 	const auto previous_length = size_;
 
@@ -249,13 +240,7 @@ void ShaderMap::push_back(Shader input_shader)
 	shader_map_[previous_length] = input_shader;
 }
 
-Shader* ShaderMap::find(const std::string input_shader_name)
+ShaderCollection::GLuint ShaderCollection::GetProgram() const
 {
-	for (auto i = 0; i < size_; ++i)
-	{
-		if (shader_map_[i].name == input_shader_name)
-			return &shader_map_[i];
-	}
-
-	return nullptr;
+	return program_;
 }

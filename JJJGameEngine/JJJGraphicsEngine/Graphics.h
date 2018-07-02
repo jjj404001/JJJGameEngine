@@ -1,6 +1,6 @@
 #pragma once
 #include "OpenGL_functions.h"
-#include "ShaderMap.h"
+#include "ShaderCollection.h"
 #include "Color.h"
 
 
@@ -9,7 +9,7 @@ class Graphics
 	friend class GLWindow;
 
 	OpenGLFunctions opengl_functions_;
-	ShaderMap shader_map_;
+	ShaderCollection Tesselation_white_shader_;
 
 	Color clear_color_{};
 
@@ -18,5 +18,5 @@ class Graphics
 	void Free();
 
 
-	void CompileShader(Shader* input_shader);
+	void CompileShaders(ShaderCollection& input_shader_collection);
 };

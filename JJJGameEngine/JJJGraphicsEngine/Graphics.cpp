@@ -1,5 +1,6 @@
 #include "Graphics.h"
 #include <iostream>
+#include <cassert>
 
 void Graphics::Initialize()
 {
@@ -10,14 +11,12 @@ void Graphics::Initialize()
 	const auto version = reinterpret_cast<const char*>(glGetString(GL_VERSION));
 	std::cout << version << std::endl;
 
-	shader_map_.LoadShader("First shader","Shader/FirstVertex.glsl", "Shader/FirstFragment.glsl");
-	CompileShader(shader_map_.find("First shader"));
 
-	shader_map_.LoadShader("Triangle shader", "Shader/Triangle_Vertex.glsl", "Shader/Triangle_Fragment.glsl");
-	CompileShader(shader_map_.find("Triangle shader"));
-
-	shader_map_.LoadShader("Tesselation triangle", "Shader/Triangle_Vertex.glsl", "Shader/Tesselation_control.glsl", "Shader/Tesselation_evalution.glsl", "Shader/Triangle_Fragment.glsl");
-	CompileShader(shader_map_.find("Tesselation triangle"));
+	Tesselation_white_shader_.push_back(Shader::LoadShader(Shader::VertexShader, "Shader/Triangle_Vertex.glsl"));
+	Tesselation_white_shader_.push_back(Shader::LoadShader(Shader::TessellationControl, "Shader/tessellation_control.glsl"));
+	Tesselation_white_shader_.push_back(Shader::LoadShader(Shader::TessellationEvaluation, "Shader/tessellation_evalution.glsl"));
+	Tesselation_white_shader_.push_back(Shader::LoadShader(Shader::FragmentShader, "Shader/Triangle_Fragment.glsl"));
+	CompileShaders(Tesselation_white_shader_);
 
 	GLuint VAO;
 	opengl_functions_.glGenVertexArrays(1, &VAO);
@@ -31,9 +30,9 @@ void Graphics::Initialize()
 
 void Graphics::Update()
 {
-	opengl_functions_.glUseProgram(shader_map_.find("Tesselation triangle")->program_);
+	opengl_functions_.glUseProgram(Tesselation_white_shader_.GetProgram());
 
-	//for tesselation
+	//for tessellation
 	glDrawArrays(GL_PATCHES, 0, 3);
 	//for triangle
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -41,118 +40,55 @@ void Graphics::Update()
 
 void Graphics::Free()
 {
-	opengl_functions_.glDeleteShader(shader_map_.find("First shader")->program_);
-	opengl_functions_.glDeleteShader(shader_map_.find("Triangle shader")->program_);
+	opengl_functions_.glDeleteShader(Tesselation_white_shader_.GetProgram());
 }
 
-void Graphics::CompileShader(Shader* input_shader)
+void Graphics::CompileShaders(ShaderCollection& input_shader_collection)
 {
-	const GLchar* vertex_shader_source[] = {input_shader->vertex_shader_source_};
-	const GLchar* tessellation_control_shader_source[] = {input_shader->tesselation_control_shader_source_};
-	const GLchar* tessellation_evaluation_shader_source[] = {input_shader->tesselation_evaluation_shader_source_};
-	const GLchar* fragment_shader_source[] = {input_shader->fragment_shader_source_};
-
 	// Create program.
-	input_shader->program_ = opengl_functions_.glCreateProgram();
+	input_shader_collection.program_ = opengl_functions_.glCreateProgram();
 
-
-
-	// Compile vertex shader
-	if (input_shader->vertex_shader_source_ != nullptr)
+	for(auto current_shader : input_shader_collection)
 	{
-		input_shader->vertex_shader_ = opengl_functions_.glCreateShader(GL_VERTEX_SHADER);
-		opengl_functions_.glShaderSource(input_shader->vertex_shader_, 1, vertex_shader_source, nullptr);
-		opengl_functions_.glCompileShader(input_shader->vertex_shader_);
+		if (current_shader.type == Shader::VertexShader)
+			current_shader.shader_ = opengl_functions_.glCreateShader(GL_VERTEX_SHADER);
+		else if (current_shader.type == Shader::TessellationControl)
+			current_shader.shader_ = opengl_functions_.glCreateShader(GL_TESS_CONTROL_SHADER);
+		else if (current_shader.type == Shader::TessellationEvaluation)
+			current_shader.shader_ = opengl_functions_.glCreateShader(GL_TESS_EVALUATION_SHADER);
+		else if (current_shader.type == Shader::FragmentShader)
+			current_shader.shader_ = opengl_functions_.glCreateShader(GL_FRAGMENT_SHADER);
+		else
+			assert(!"Undefined shader type");
+
+		const GLchar* shader_source[] = { current_shader.shader_source_ };
+
+		opengl_functions_.glShaderSource(current_shader.shader_, 1, shader_source, nullptr);
+		opengl_functions_.glCompileShader(current_shader.shader_);
+
 
 		int  success;
 		char infoLog[512];
-		opengl_functions_.glGetShaderiv(input_shader->vertex_shader_, GL_COMPILE_STATUS, &success);
+		opengl_functions_.glGetShaderiv(current_shader.shader_, GL_COMPILE_STATUS, &success);
 		if (!success)
 		{
-			opengl_functions_.glGetShaderInfoLog(input_shader->vertex_shader_, 512, nullptr, infoLog);
-			std::cout << "Error!! Vertex shader compile failed. : \n" << infoLog << std::endl;
+			opengl_functions_.glGetShaderInfoLog(current_shader.shader_, 512, nullptr, infoLog);
+			std::cout << "Error!! shader compile failed. : \n" << infoLog << std::endl;
 		}
 
-		// Attach shaders
-		opengl_functions_.glAttachShader(input_shader->program_, input_shader->vertex_shader_);
-	}
-
-	// Compile tessellation control shader
-	if (input_shader->tesselation_control_shader_source_ != nullptr)
-	{
-		input_shader->tesselation_control_shader_ = opengl_functions_.glCreateShader(GL_TESS_CONTROL_SHADER);
-		opengl_functions_.glShaderSource(input_shader->tesselation_control_shader_, 1, tessellation_control_shader_source, nullptr);
-		opengl_functions_.glCompileShader(input_shader->tesselation_control_shader_);
-
-		int  success;
-		char infoLog[512];
-		opengl_functions_.glGetShaderiv(input_shader->tesselation_control_shader_, GL_COMPILE_STATUS, &success);
-		if (!success)
-		{
-			opengl_functions_.glGetShaderInfoLog(input_shader->tesselation_control_shader_, 512, nullptr, infoLog);
-			std::cout << "Error!! Tesselation control shader compile failed. : \n" << infoLog << std::endl;
-		}
 
 		// Attach shaders
-		opengl_functions_.glAttachShader(input_shader->program_, input_shader->tesselation_control_shader_);
+		opengl_functions_.glAttachShader(input_shader_collection.program_, current_shader.shader_);
 	}
 
-	// Compile tessellation evaluation shader
-	if (input_shader->tesselation_evaluation_shader_source_ != nullptr)
-	{
-		input_shader->tesselation_evaluation_shader_ = opengl_functions_.glCreateShader(GL_TESS_EVALUATION_SHADER);
-		opengl_functions_.glShaderSource(input_shader->tesselation_evaluation_shader_, 1, tessellation_evaluation_shader_source, nullptr);
-		opengl_functions_.glCompileShader(input_shader->tesselation_evaluation_shader_);
-
-		int  success;
-		char infoLog[512];
-		opengl_functions_.glGetShaderiv(input_shader->tesselation_evaluation_shader_, GL_COMPILE_STATUS, &success);
-		if (!success)
-		{
-			opengl_functions_.glGetShaderInfoLog(input_shader->tesselation_evaluation_shader_, 512, nullptr, infoLog);
-			std::cout << "Error!! Tesselation evaluation shader compile failed. : \n" << infoLog << std::endl;
-		}
-
-		// Attach shaders
-		opengl_functions_.glAttachShader(input_shader->program_, input_shader->tesselation_evaluation_shader_);
-	}
-
-
-	// Compile fragment shader
-	if (input_shader->fragment_shader_source_ != nullptr)
-	{
-		input_shader->fragment_shader_ = opengl_functions_.glCreateShader(GL_FRAGMENT_SHADER);
-		opengl_functions_.glShaderSource(input_shader->fragment_shader_, 1, fragment_shader_source, nullptr);
-		opengl_functions_.glCompileShader(input_shader->fragment_shader_);
-
-		int  success;
-		char infoLog[512];
-		opengl_functions_.glGetShaderiv(input_shader->fragment_shader_, GL_COMPILE_STATUS, &success);
-		if (!success)
-		{
-			opengl_functions_.glGetShaderInfoLog(input_shader->fragment_shader_, 512, nullptr, infoLog);
-			std::cout << "Error!! Fragment shader shader compile failed. : \n" << infoLog << std::endl;
-		}
-
-		// Attach shaders
-		opengl_functions_.glAttachShader(input_shader->program_, input_shader->fragment_shader_);
-	}
 
 
 
 	// Link program
-	opengl_functions_.glLinkProgram(input_shader->program_);
+	opengl_functions_.glLinkProgram(input_shader_collection.program_);
 
-	// Delete shaders after compile and link.
-	if (input_shader->vertex_shader_ != NULL)
-		opengl_functions_.glDeleteShader(input_shader->vertex_shader_);
-
-	if (input_shader->tesselation_control_shader_ != NULL)
-		opengl_functions_.glDeleteShader(input_shader->tesselation_control_shader_);
-
-	if (input_shader->tesselation_evaluation_shader_ != NULL)
-		opengl_functions_.glDeleteShader(input_shader->tesselation_evaluation_shader_);
-
-	if (input_shader->fragment_shader_ != NULL)
-		opengl_functions_.glDeleteShader(input_shader->fragment_shader_);
+	for (const auto current_shader : input_shader_collection)
+	{
+		opengl_functions_.glDeleteShader(current_shader.shader_);
+	}
 }
