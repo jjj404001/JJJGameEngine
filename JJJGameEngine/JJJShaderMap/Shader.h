@@ -8,6 +8,7 @@ class Shader
 		VertexShader = 1,
 		TessellationControl,
 		TessellationEvaluation,
+		Geometry,
 		FragmentShader,
 	};
 

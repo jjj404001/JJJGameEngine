@@ -9,7 +9,7 @@ class Graphics
 	friend class GLWindow;
 
 	OpenGLFunctions opengl_functions_;
-	ShaderCollection Tesselation_white_shader_;
+	ShaderCollection Tesselation_geometry_white_shader_;
 
 	Color clear_color_{};
 
