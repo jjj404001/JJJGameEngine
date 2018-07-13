@@ -25,6 +25,18 @@ void OpenGLFunctions::InitOpenGLFunctions()
 
 
 	// GL buffers
+	glGenBuffers = reinterpret_cast<PFNGLGENBUFFERSPROC>(wglGetProcAddress("glGenBuffers"));
+	if (glGenBuffers == nullptr)
+		assert(!"glGenBuffers not initialized.");
+
+	glBindBuffer = reinterpret_cast<PFNGLBINDBUFFERPROC>(wglGetProcAddress("glBindBuffer"));
+	if (glBindBuffer == nullptr)
+		assert(!"glBindBuffer not initialized.");
+
+	glBufferData = reinterpret_cast<PFNGLBUFFERDATAPROC>(wglGetProcAddress("glBufferData"));
+	if (glBufferData == nullptr)
+		assert(!"glBufferData not initialized.");
+
 	glClearBufferfv = reinterpret_cast<PFNGLCLEARBUFFERFVPROC>(wglGetProcAddress("glClearBufferfv"));
 	if (glClearBufferfv == nullptr)
 		assert(!"glClearBufferfv not initialized.");
@@ -71,10 +83,17 @@ void OpenGLFunctions::InitOpenGLFunctions()
 	if (glDeleteShader == nullptr)
 		assert(!"glDeleteShader not initialized.");
 
-	 glUseProgram = reinterpret_cast<PFNGLUSEPROGRAMPROC>(wglGetProcAddress("glUseProgram"));
+	glUseProgram = reinterpret_cast<PFNGLUSEPROGRAMPROC>(wglGetProcAddress("glUseProgram"));
 	if (glUseProgram == nullptr)
 		assert(!"glUseProgram not initialized.");
 
+	glGetShaderiv = reinterpret_cast<PFNGLGETSHADERIVPROC>(wglGetProcAddress("glGetShaderiv"));
+	if (glGetShaderiv == nullptr)
+		assert(!"glGetShaderiv not initialized.");
+
+	glGetShaderInfoLog = reinterpret_cast<PFNGLGETSHADERINFOLOGPROC>(wglGetProcAddress("glGetShaderInfoLog"));
+	if (glGetShaderInfoLog == nullptr)
+		assert(!"glGetShaderInfoLog not initialized.");
 
 	// Vertex arrays
 	glGenVertexArrays = reinterpret_cast<PFNGLGENVERTEXARRAYSPROC>(wglGetProcAddress("glGenVertexArrays"));
@@ -85,15 +104,19 @@ void OpenGLFunctions::InitOpenGLFunctions()
 	if (glBindVertexArray == nullptr)
 		assert(!"glBindVertexArray not initialized.");
 
+	glEnableVertexAttribArray = reinterpret_cast<PFNGLENABLEVERTEXATTRIBARRAYPROC>(wglGetProcAddress("glEnableVertexAttribArray"));
+	if (glEnableVertexAttribArray == nullptr)
+		assert(!"glEnableVertexAttribArray not initialized.");
+
+	glVertexAttribPointer = reinterpret_cast<PFNGLVERTEXATTRIBPOINTERPROC>(wglGetProcAddress("glVertexAttribPointer"));
+	if (glVertexAttribPointer == nullptr)
+		assert(!"glVertexAttribPointer not initialized.");
 
 	// GL drawing
-	glDrawArrays = reinterpret_cast<PFNGLDRAWARRAYSEXTPROC>(wglGetProcAddress("glDrawArrays"));
-	if (glDrawArrays == nullptr)
+	glDrawArraysEXT = reinterpret_cast<PFNGLDRAWARRAYSEXTPROC>(wglGetProcAddress("glDrawArraysEXT"));
+	if (glDrawArraysEXT == nullptr)
 		assert(!"glDrawArrays not initialized.");
 
 
-	// GL point size
-	glPointSize = reinterpret_cast<PFNGLPOINTSIZEXOESPROC>(wglGetProcAddress("glPointSize"));
-	if (glPointSize == nullptr)
-		assert(!"glPointSize not initialized.");
+
 }
