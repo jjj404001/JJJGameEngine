@@ -1,9 +1,7 @@
 #pragma once
 #include <vector>
 
-#include <gl/GL.h>
-#include <glext.h>
-#include <wglext.h>
+#include <OpenGL_functions.h>
 
 struct Stride
 {

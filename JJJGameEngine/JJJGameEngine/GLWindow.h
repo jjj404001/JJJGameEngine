@@ -66,5 +66,4 @@ public:
 	void ResizeOpenGLViewport() const;
 
 	HWND& GetHWND() { return hWnd_; }
-	OpenGLFunctions& GetFunctions() { return graphics_.opengl_functions_; }
 };

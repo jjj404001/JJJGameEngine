@@ -1,11 +1,10 @@
 #include "GLWindow.h"
 #include "resource.h"
 #include "Attributes.h"
-#include "OpenGL_functions.h"
 #include <iostream>
 #include <string>
 
-
+#include "OpenGL_functions.h"
 
 // Prototype
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -84,7 +83,7 @@ bool GLWindow::Create_Context(const Attributes input_attrib, GLWindow& fake)
 
 
 	// If faile to choose pixelformat or number of pixelformat is 0.
-	if (!graphics_.opengl_functions_.wglChoosePixelFormatARB(device_context_, input_attrib.pixelAttribs, nullptr, 1, &fake.pixelFormatID_, &fake.numFormats_) || fake.numFormats_ == 0)
+	if (!wglChoosePixelFormatARB(device_context_, input_attrib.pixelAttribs, nullptr, 1, &fake.pixelFormatID_, &fake.numFormats_) || fake.numFormats_ == 0)
 		return true;
 
 
@@ -95,7 +94,7 @@ bool GLWindow::Create_Context(const Attributes input_attrib, GLWindow& fake)
 
 
 
-	rendering_context_ = graphics_.opengl_functions_.wglCreateContextAttribsARB(device_context_, nullptr, input_attrib.contextAttribs);
+	rendering_context_ = wglCreateContextAttribsARB(device_context_, nullptr, input_attrib.contextAttribs);
 	if (rendering_context_ == nullptr)
 		return true;
 
@@ -156,7 +155,7 @@ void GLWindow::EndClockAndPrintFPS()
 
 bool GLWindow::InitOpenGL()
 {
-	graphics_.opengl_functions_.InitOpenGLFunctions();
+	InitOpenGLFunctions();
 
 	return true;
 }
@@ -199,7 +198,7 @@ void GLWindow::Render()
 	//glPolygonMode(GL_FRONT_AND_BACK, graphic.GetPolyMode());
 	
 	GLfloat red[] = { 1.0f, 0.0f, 0.0f, 1.0f};
-	graphics_.opengl_functions_.glClearBufferfv(GL_COLOR, 0, red);
+	glClearBufferfv(GL_COLOR, 0, red);
 
 
 	graphics_.Update();

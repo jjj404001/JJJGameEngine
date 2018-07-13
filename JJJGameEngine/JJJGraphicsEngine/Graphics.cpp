@@ -1,11 +1,11 @@
 #include "Graphics.h"
 #include <iostream>
 #include <cassert>
-
+#include "OpenGL_functions.h"
 void Graphics::Initialize()
 {
 	
-	opengl_functions_.wglSwapIntervalEXT(true);
+	wglSwapIntervalEXT(true);
 
 
 	const auto version = reinterpret_cast<const char*>(glGetString(GL_VERSION));
@@ -20,8 +20,8 @@ void Graphics::Initialize()
 	CompileShaders(Tesselation_geometry_white_shader_);
 
 	GLuint VAO;
-	opengl_functions_.glGenVertexArrays(1, &VAO);
-	opengl_functions_.glBindVertexArray(VAO);
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -31,7 +31,7 @@ void Graphics::Initialize()
 
 void Graphics::Update()
 {
-	opengl_functions_.glUseProgram(Tesselation_geometry_white_shader_.GetProgram());
+	glUseProgram(Tesselation_geometry_white_shader_.GetProgram());
 
 	//for tessellation
 	glDrawArrays(GL_PATCHES, 0, 3);
@@ -41,32 +41,32 @@ void Graphics::Update()
 
 void Graphics::Free() const
 {
-	opengl_functions_.glDeleteShader(Tesselation_geometry_white_shader_.GetProgram());
+	glDeleteShader(Tesselation_geometry_white_shader_.GetProgram());
 }
 
 void Graphics::CompileShaders(ShaderCollection& input_shader_collection) const
 {
 	// Create program.
-	input_shader_collection.program_ = opengl_functions_.glCreateProgram();
+	input_shader_collection.program_ = glCreateProgram();
 
 	for(auto current_shader : input_shader_collection)
 	{
 		switch (current_shader.type)
 		{
 			case Shader::VertexShader:
-				current_shader.shader_ = opengl_functions_.glCreateShader(GL_VERTEX_SHADER);
+				current_shader.shader_ = glCreateShader(GL_VERTEX_SHADER);
 				break;
 			case Shader::TessellationControl:
-				current_shader.shader_ = opengl_functions_.glCreateShader(GL_TESS_CONTROL_SHADER);
+				current_shader.shader_ = glCreateShader(GL_TESS_CONTROL_SHADER);
 				break;
 			case Shader::TessellationEvaluation:
-				current_shader.shader_ = opengl_functions_.glCreateShader(GL_TESS_EVALUATION_SHADER);
+				current_shader.shader_ = glCreateShader(GL_TESS_EVALUATION_SHADER);
 				break;
 			case Shader::Geometry:
-				current_shader.shader_ = opengl_functions_.glCreateShader(GL_GEOMETRY_SHADER);
+				current_shader.shader_ = glCreateShader(GL_GEOMETRY_SHADER);
 				break;
 			case Shader::FragmentShader:
-				current_shader.shader_ = opengl_functions_.glCreateShader(GL_FRAGMENT_SHADER);
+				current_shader.shader_ = glCreateShader(GL_FRAGMENT_SHADER);
 				break;
 			default:
 				assert(!"Undefined shader type");
@@ -74,30 +74,30 @@ void Graphics::CompileShaders(ShaderCollection& input_shader_collection) const
 
 		const GLchar* shader_source[] = { current_shader.shader_source_ };
 
-		opengl_functions_.glShaderSource(current_shader.shader_, 1, shader_source, nullptr);
-		opengl_functions_.glCompileShader(current_shader.shader_);
+		glShaderSource(current_shader.shader_, 1, shader_source, nullptr);
+		glCompileShader(current_shader.shader_);
 
 
 		int  success;
 		char infoLog[512];
-		opengl_functions_.glGetShaderiv(current_shader.shader_, GL_COMPILE_STATUS, &success);
+		glGetShaderiv(current_shader.shader_, GL_COMPILE_STATUS, &success);
 		if (!success)
 		{
-			opengl_functions_.glGetShaderInfoLog(current_shader.shader_, 512, nullptr, infoLog);
+			glGetShaderInfoLog(current_shader.shader_, 512, nullptr, infoLog);
 			std::cout << "Error!! shader compile failed. : \n" << infoLog << std::endl;
 		}
 
 
 		// Attach shaders
-		opengl_functions_.glAttachShader(input_shader_collection.program_, current_shader.shader_);
+		glAttachShader(input_shader_collection.program_, current_shader.shader_);
 	}
 
 
 
 
 	// Link program
-	opengl_functions_.glLinkProgram(input_shader_collection.program_);
+	glLinkProgram(input_shader_collection.program_);
 
 	for (const auto current_shader : input_shader_collection)
-		opengl_functions_.glDeleteShader(current_shader.shader_);
+		glDeleteShader(current_shader.shader_);
 }
