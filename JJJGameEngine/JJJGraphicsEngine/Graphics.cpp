@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cassert>
 #include "OpenGL_functions.h"
+#include "Mesh.h"
 void Graphics::Initialize()
 {
 	
@@ -19,20 +20,34 @@ void Graphics::Initialize()
 	Tesselation_geometry_white_shader_.push_back(Shader::LoadShader(Shader::FragmentShader, "Shader/Triangle_Fragment.glsl"));
 	CompileShaders(Tesselation_geometry_white_shader_);
 
-	GLuint VAO;
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	Tesselation_white_shader_.push_back(Shader::LoadShader(Shader::VertexShader, "Shader/Triangle_Vertex.glsl"));
+	Tesselation_white_shader_.push_back(Shader::LoadShader(Shader::TessellationControl, "Shader/tessellation_control.glsl"));
+	Tesselation_white_shader_.push_back(Shader::LoadShader(Shader::TessellationEvaluation, "Shader/tessellation_evalution.glsl"));
+	Tesselation_white_shader_.push_back(Shader::LoadShader(Shader::FragmentShader, "Shader/Triangle_Fragment.glsl"));
+	CompileShaders(Tesselation_white_shader_);
 
+
+	SimpeVF.push_back(Shader::LoadShader(Shader::VertexShader, "Shader/Triangle_Vertex.glsl"));
+	SimpeVF.push_back(Shader::LoadShader(Shader::FragmentShader, "Shader/Triangle_Fragment.glsl"));
+	CompileShaders(SimpeVF);
+
+
+	Mesh mesh;
+	mesh.debug_triangle();
+	
+
+	mesh.Initialize_VAO_VBO();
+	
 	// Pixel size
 	glPointSize(5.0f);
 }
 
 void Graphics::Update()
 {
-	glUseProgram(Tesselation_geometry_white_shader_.GetProgram());
+	glUseProgram(Tesselation_white_shader_.GetProgram());
 
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	//for tessellation
 	glDrawArrays(GL_PATCHES, 0, 3);
 	//for triangle

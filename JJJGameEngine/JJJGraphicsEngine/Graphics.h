@@ -8,6 +8,8 @@ class Graphics
 	friend class GLWindow;
 
 	ShaderCollection Tesselation_geometry_white_shader_;
+	ShaderCollection Tesselation_white_shader_;
+	ShaderCollection SimpeVF;
 
 	Color clear_color_;
 

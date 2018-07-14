@@ -20,9 +20,10 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{355BBE2E-1604-4C26-B909-7CD7BD5BF545}</ProjectGuid>
-    <RootNamespace>JJJGameEngine</RootNamespace>
+    <ProjectGuid>{B574FA38-3758-4BBB-BBB7-30DED5CC436A}</ProjectGuid>
+    <RootNamespace>JJJEngine</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <ProjectName>JJJEngine</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -164,10 +165,10 @@
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="JJJGameEngine.rc" />
+    <Image Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Icon.ico" />
+    <ResourceCompile Include="JJJEngine.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
