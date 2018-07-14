@@ -1,7 +1,7 @@
 #pragma once
 #include "ShaderCollection.h"
 #include "Color.h"
-
+#include "Mesh.h"
 
 class Graphics
 {
@@ -9,9 +9,12 @@ class Graphics
 
 	ShaderCollection Tesselation_geometry_white_shader_;
 	ShaderCollection Tesselation_white_shader_;
-	ShaderCollection SimpeVF;
+	ShaderCollection vertex_fragment_;
 
 	Color clear_color_;
+
+	Mesh testMesh;
+
 
 	void Initialize();
 	void Update();

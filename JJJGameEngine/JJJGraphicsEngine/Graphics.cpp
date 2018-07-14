@@ -1,8 +1,8 @@
 #include "Graphics.h"
 #include <iostream>
 #include <cassert>
-#include "OpenGL_functions.h"
-#include "Mesh.h"
+
+
 void Graphics::Initialize()
 {
 	
@@ -28,30 +28,35 @@ void Graphics::Initialize()
 	CompileShaders(Tesselation_white_shader_);
 
 
-	SimpeVF.push_back(Shader::LoadShader(Shader::VertexShader, "Shader/Triangle_Vertex.glsl"));
-	SimpeVF.push_back(Shader::LoadShader(Shader::FragmentShader, "Shader/Triangle_Fragment.glsl"));
-	CompileShaders(SimpeVF);
+	vertex_fragment_.push_back(Shader::LoadShader(Shader::VertexShader, "Shader/Triangle_Vertex.glsl"));
+	vertex_fragment_.push_back(Shader::LoadShader(Shader::FragmentShader, "Shader/Triangle_Fragment.glsl"));
+	CompileShaders(vertex_fragment_);
 
 
-	Mesh mesh;
-	mesh.debug_triangle();
+	
+	testMesh.debug_triangle();
 	
 
-	mesh.Initialize_VAO_VBO();
+	testMesh.Initialize_VAO_VBO();
 	
 	// Pixel size
 	glPointSize(5.0f);
+
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	// Set shader program
+	glUseProgram(vertex_fragment_.GetProgram());
+
+
+	
+
 }
 
 void Graphics::Update()
 {
-	glUseProgram(Tesselation_white_shader_.GetProgram());
-
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	//for tessellation
-	glDrawArrays(GL_PATCHES, 0, 3);
-	//for triangle
-	//glDrawArrays(GL_TRIANGLES, 0, 3);
+	//glDrawArrays(primitive_, 0, number_of_vert_);
+	glDrawElements(testMesh.Get_Primitive(), testMesh.Get_NumOfVertices(), GL_UNSIGNED_INT, 0);
 }
 
 void Graphics::Free() const

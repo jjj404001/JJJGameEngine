@@ -20,13 +20,17 @@ struct Stride
 class Mesh
 {
 	std::vector<Stride> vertices; // Collection of vertices position and color.
+	std::vector<unsigned int> indices; // Collection of vertices position and color.
 
-	unsigned int number_of_vertex_ = 0;// number of vertecies.
-	unsigned int index_ = 0;           // Index in vao.
+
+
+	
 
 	unsigned int tessellation_factor_ = 3; // default tesselation is 3.
 
-	unsigned int primitive_ = GL_TRIANGLES;
+	GLenum primitive_ = GL_TRIANGLES;
+	GLsizei number_of_vertex_ = 0;// number of vertecies.
+
 
 	GLuint VAO; // Vertex Attribute Object
 	GLuint VBO; // Vertex Buffer Object
@@ -39,4 +43,7 @@ public:
 	void Update_VAO_VBO();
 
 	void debug_triangle();
+
+	GLenum Get_Primitive();
+	GLsizei Get_NumOfVertices();
 };
