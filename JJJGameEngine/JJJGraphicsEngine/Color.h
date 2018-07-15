@@ -1,5 +1,4 @@
 #pragma once
-#define RGBA32 unsigned int
 #define ColorChannel unsigned char
 
 struct Color

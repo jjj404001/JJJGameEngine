@@ -1,21 +1,12 @@
 #pragma once
 #include <vector>
 #include <OpenGL_functions.h>
+#include "Stride.h"
 
-#define NUMBER_OF_ELEMENT 3
+#define NUMBER_OF_COMP 2 // position, color
+#define NUMBER_OF_ELEMENT 7 // 3 for position, 4 for color
 
-struct Stride
-{
-	
 
-	Stride(float x, float y, float z)
-	{
-		position[0] = x;
-		position[1] = y;
-		position[2] = z;
-	}
-	float position[3] = {0.0f, };
-};
 
 class Mesh
 {

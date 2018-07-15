@@ -1,5 +1,8 @@
 #version 400 core
 
-void main() {
-    gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+in vec4 color_for_fragment;
+
+void main() 
+{
+    gl_FragColor = color_for_fragment / 255;
 }
