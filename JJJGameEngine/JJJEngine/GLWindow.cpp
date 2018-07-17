@@ -202,7 +202,6 @@ void GLWindow::Render()
 
 
 	SwapBuffers(device_context_);
-	
 }
 
 void GLWindow::Close()

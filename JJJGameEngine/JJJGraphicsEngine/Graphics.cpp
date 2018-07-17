@@ -20,7 +20,7 @@ void Graphics::Initialize()
 	Tesselation_geometry_white_shader_.push_back(Shader::LoadShader(Shader::FragmentShader, "Shader/Triangle_Fragment.glsl"));
 	CompileShaders(Tesselation_geometry_white_shader_);
 
-
+	
 	Tesselation_white_shader_.push_back(Shader::LoadShader(Shader::VertexShader, "Shader/Triangle_Vertex.glsl"));
 	Tesselation_white_shader_.push_back(Shader::LoadShader(Shader::TessellationControl, "Shader/tessellation_control.glsl"));
 	Tesselation_white_shader_.push_back(Shader::LoadShader(Shader::TessellationEvaluation, "Shader/tessellation_evalution.glsl"));
@@ -38,25 +38,22 @@ void Graphics::Initialize()
 	
 
 	testMesh.Initialize_VAO_VBO();
+
+	testMesh.SetShader(&Tesselation_white_shader_);
 	
 	// Pixel size
 	glPointSize(5.0f);
 
-
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	// Set shader program
-	glUseProgram(vertex_fragment_.GetProgram());
-
-
-	
-
+	glUseProgram(testMesh.GetShader().GetProgram());
 }
 
 void Graphics::Update()
 {
-	//glDrawArrays(primitive_, 0, number_of_vert_);
-	glDrawElements(testMesh.Get_Primitive(), testMesh.Get_NumOfVertices(), GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_PATCHES, testMesh.Get_NumOfVertices(), GL_UNSIGNED_INT, nullptr);
+	//glDrawElements(testMesh.Get_Primitive(), testMesh.Get_NumOfVertices(), GL_UNSIGNED_INT, nullptr);
 }
 
 void Graphics::Free() const

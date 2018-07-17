@@ -1,5 +1,6 @@
 #include "Mesh.h"
 
+
 unsigned __int64 Mesh::Buffer_Size()
 {
 
@@ -74,4 +75,14 @@ GLenum Mesh::Get_Primitive()
 GLsizei Mesh::Get_NumOfVertices()
 {
 	return number_of_vertex_;
+}
+
+void Mesh::SetShader(ShaderCollection* input_shader)
+{
+	shader_ = input_shader;
+}
+
+ShaderCollection& Mesh::GetShader()
+{
+	return *shader_;
 }

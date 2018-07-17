@@ -7,7 +7,7 @@
 #define NUMBER_OF_ELEMENT 7 // 3 for position, 4 for color
 
 
-
+class ShaderCollection;
 class Mesh
 {
 	std::vector<Stride> vertices; // Collection of vertices position and color.
@@ -27,6 +27,8 @@ class Mesh
 	GLuint VBO; // Vertex Buffer Object
 	GLuint EBO; // Element Buffer Object
 
+	ShaderCollection* shader_ = nullptr;
+
 	unsigned __int64 Buffer_Size();
 
 public:
@@ -37,4 +39,8 @@ public:
 
 	GLenum Get_Primitive();
 	GLsizei Get_NumOfVertices();
+
+	void SetShader(ShaderCollection* input_shader);
+	ShaderCollection& GetShader(void);
+	GLuint& GetShaderProgram(void);
 };

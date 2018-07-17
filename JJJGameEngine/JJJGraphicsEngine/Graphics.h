@@ -22,4 +22,7 @@ class Graphics
 
 
 	void CompileShaders(ShaderCollection& input_shader_collection) const;
+
+public:
+	bool Tessellation = false;
 };
