@@ -53,6 +53,10 @@ void Mesh::debug_triangle()
 	bottom_left.color = Color(0, 255, 0, 255);
 	top_right.color = Color(0, 0, 255, 255);
 
+	bottom_right.color = Color(255, 255, 255, 255);
+	bottom_left.color = Color(255, 255, 255, 255);
+	top_right.color = Color(255, 255, 255, 255);
+
 	vertices.push_back(bottom_left);
 	vertices.push_back(bottom_right);
 	vertices.push_back(top_right);

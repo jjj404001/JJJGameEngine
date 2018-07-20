@@ -6,6 +6,9 @@ void TwoDimensionalCamera::Initialize(long res_x, long res_y)
 	view_  = Affine2d::build_identity();
 	world_ = Affine2d::build_identity();
 
+	right_.x = res_x;
+	up_.y = res_y;
+
 	// rotation.
 	view_.value[0][0] = right_.x;
 	view_.value[0][1] = right_.y;

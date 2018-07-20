@@ -31,6 +31,8 @@
 	extern PFNGLUSEPROGRAMPROC glUseProgram;
 	extern PFNGLGETSHADERIVPROC glGetShaderiv;
 	extern PFNGLGETSHADERINFOLOGPROC glGetShaderInfoLog;
+	extern PFNGLGETUNIFORMLOCATIONPROC glGetUniformLocation;
+	extern PFNGLUNIFORMMATRIX3FVPROC glUniformMatrix3fv;
 	// GL vertex arrays
 	extern PFNGLGENVERTEXARRAYSPROC glGenVertexArrays;
 	extern PFNGLBINDVERTEXARRAYPROC glBindVertexArray;
@@ -40,5 +42,6 @@
 	// GL drawing
 	extern PFNGLDRAWARRAYSEXTPROC glDrawArraysEXT;
 
+	
 
 	void InitOpenGLFunctions();

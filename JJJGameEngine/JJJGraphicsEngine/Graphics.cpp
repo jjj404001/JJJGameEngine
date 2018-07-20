@@ -41,6 +41,9 @@ void Graphics::Initialize(long res_x, long res_y)
 	testOBJ.GetMesh().SetShader(&Tesselation_white_shader_);
 
 	testOBJ.name = SET_INITIAL_NAME(testOBJ);
+	testOBJ.transform_.translation_ = Vector2(0.0f, 0.0f);
+
+
 
 	object_list_.push_back(testOBJ);
 
@@ -61,9 +64,9 @@ void Graphics::Update()
 
 
 
-		auto T = Affine2d::build_translation(current_OBJ.transform_.translation_.x, current_OBJ.transform_.translation_.y);
+		auto T = Affine2d::build_translation(current_OBJ.transform_.translation_.value[0], current_OBJ.transform_.translation_.value[1]);
 		auto R = Affine2d::build_rotation(-current_OBJ.transform_.rotation_);
-		auto S = Affine2d::build_scale(current_OBJ.transform_.scale_.x, current_OBJ.transform_.scale_.y);
+		auto S = Affine2d::build_scale(current_OBJ.transform_.scale_.value[0], current_OBJ.transform_.scale_.value[1]);
 
 
 		// Use this order because we transpose.
@@ -73,7 +76,7 @@ void Graphics::Update()
 
 
 
-		const auto uniCombined = glGetUniformLocation(current_OBJ.mesh_.GetShader(), "combined");
+		const auto uniCombined = glGetUniformLocation(current_OBJ.mesh_.GetShader().GetProgram(), "combined");
 		const auto combined = main_camera_.CombindMatrix();
 
 

@@ -3,9 +3,9 @@
 
 class TwoDimensionalCamera : public Camera
 {
-	float zoom_;
+	float zoom_ = 1.0f;
 
-	float rotation_;
+	float rotation_ = 0.0f;
 
 	Vector2 right_;
 	Vector2 up_;

@@ -25,6 +25,8 @@ PFNGLDELETESHADERPROC glDeleteShader = nullptr;
 PFNGLUSEPROGRAMPROC glUseProgram = nullptr;
 PFNGLGETSHADERIVPROC glGetShaderiv = nullptr;
 PFNGLGETSHADERINFOLOGPROC glGetShaderInfoLog = nullptr;
+PFNGLGETUNIFORMLOCATIONPROC glGetUniformLocation = nullptr;
+PFNGLUNIFORMMATRIX3FVPROC glUniformMatrix3fv = nullptr;
 // GL vertex arrays
 PFNGLGENVERTEXARRAYSPROC glGenVertexArrays = nullptr;
 PFNGLBINDVERTEXARRAYPROC glBindVertexArray = nullptr;
@@ -126,6 +128,11 @@ void InitOpenGLFunctions()
 	if (glGetShaderInfoLog == nullptr)
 		assert(!"glGetShaderInfoLog not initialized.");
 
+	glUniformMatrix3fv = reinterpret_cast<PFNGLUNIFORMMATRIX3FVPROC>(wglGetProcAddress("glUniformMatrix3fv"));
+	if (glUniformMatrix3fv == nullptr)
+		assert(!"glUniformMatrix3fv not initialized.");
+
+
 	// Vertex arrays
 	glGenVertexArrays = reinterpret_cast<PFNGLGENVERTEXARRAYSPROC>(wglGetProcAddress("glGenVertexArrays"));
 	if (glGenVertexArrays == nullptr)
@@ -142,6 +149,10 @@ void InitOpenGLFunctions()
 	glVertexAttribPointer = reinterpret_cast<PFNGLVERTEXATTRIBPOINTERPROC>(wglGetProcAddress("glVertexAttribPointer"));
 	if (glVertexAttribPointer == nullptr)
 		assert(!"glVertexAttribPointer not initialized.");
+
+	glGetUniformLocation = reinterpret_cast<PFNGLGETUNIFORMLOCATIONPROC>(wglGetProcAddress("glGetUniformLocation"));
+	if (glGetUniformLocation == nullptr)
+		assert(!"glGetUniformLocation not initialized.");
 
 	// GL drawing
 	glDrawArraysEXT = reinterpret_cast<PFNGLDRAWARRAYSEXTPROC>(wglGetProcAddress("glDrawArraysEXT"));
