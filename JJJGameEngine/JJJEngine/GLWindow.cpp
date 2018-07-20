@@ -180,7 +180,10 @@ void GLWindow::Initialize()
 
 
 	SetActiveWindow(GetHWND());
-	graphics_.Initialize();
+	RECT resolution;
+	GetClientRect(hWnd_, &resolution);
+
+	graphics_.Initialize(resolution.right, resolution.bottom);
 }
 
 void GLWindow::Update()

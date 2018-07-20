@@ -26,7 +26,7 @@ non-member normal function :
 + Affine3d Build_identity(void);                               // build identity matrix.
 + Affine3d build_scale(float scaleFactor);                     // build uniform affine sacle matrix.
 + Affine3d build_scale(float scaleFactor1, float scaleFactor2);// build non uniform affine sacle matrix.
-+ Affine3d build_affine_translation(float Xposition, float Yposition);// build translation affine matrix with given number.
++ Affine3d build_translation(float Xposition, float Yposition);// build translation affine matrix with given number.
 
 */
 /******************************************************************************/

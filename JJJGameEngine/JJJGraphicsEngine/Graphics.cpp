@@ -1,16 +1,19 @@
 #include "Graphics.h"
 #include <iostream>
 #include <cassert>
+#include "Camera.h"
+#define SET_INITIAL_NAME(Variable) (#Variable)
 
-
-void Graphics::Initialize()
+void Graphics::Initialize(long res_x, long res_y)
 {
-	
 	wglSwapIntervalEXT(true);
 
 
 	const auto version = reinterpret_cast<const char*>(glGetString(GL_VERSION));
 	std::cout << version << std::endl;
+
+
+	main_camera_.Initialize(res_x, res_y);
 
 
 	Tesselation_geometry_white_shader_.push_back(Shader::LoadShader(Shader::VertexShader, "Shader/Triangle_Vertex.glsl"));
@@ -32,27 +35,55 @@ void Graphics::Initialize()
 	vertex_fragment_.push_back(Shader::LoadShader(Shader::FragmentShader, "Shader/Triangle_Fragment.glsl"));
 	CompileShaders(vertex_fragment_);
 
+	Object testOBJ;
+	testOBJ.GetMesh().debug_triangle();
+	testOBJ.GetMesh().Initialize_VAO_VBO();
+	testOBJ.GetMesh().SetShader(&Tesselation_white_shader_);
 
-	
-	testMesh.debug_triangle();
-	
+	testOBJ.name = SET_INITIAL_NAME(testOBJ);
 
-	testMesh.Initialize_VAO_VBO();
+	object_list_.push_back(testOBJ);
 
-	testMesh.SetShader(&Tesselation_white_shader_);
-	
 	// Pixel size
 	glPointSize(5.0f);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	// Set shader program
-	glUseProgram(testMesh.GetShader().GetProgram());
+	glUseProgram(testOBJ.GetMesh().GetShader().GetProgram());
 }
 
 void Graphics::Update()
 {
-	glDrawElements(GL_PATCHES, testMesh.Get_NumOfVertices(), GL_UNSIGNED_INT, nullptr);
+	for (auto current_OBJ : object_list_)
+	{
+		std::cout << current_OBJ.name << std::endl;
+
+
+
+		auto T = Affine2d::build_translation(current_OBJ.transform_.translation_.x, current_OBJ.transform_.translation_.y);
+		auto R = Affine2d::build_rotation(-current_OBJ.transform_.rotation_);
+		auto S = Affine2d::build_scale(current_OBJ.transform_.scale_.x, current_OBJ.transform_.scale_.y);
+
+
+		// Use this order because we transpose.
+		main_camera_.SetWorld(T, R, S);
+
+
+
+
+
+		const auto uniCombined = glGetUniformLocation(current_OBJ.mesh_.GetShader(), "combined");
+		const auto combined = main_camera_.CombindMatrix();
+
+
+		glUniformMatrix3fv(uniCombined, 1, GL_TRUE, &combined.value[0][0]);
+
+
+
+
+		glDrawElements(GL_PATCHES, current_OBJ.GetMesh().Get_NumOfVertices(), GL_UNSIGNED_INT, nullptr);
+	}
 	//glDrawElements(testMesh.Get_Primitive(), testMesh.Get_NumOfVertices(), GL_UNSIGNED_INT, nullptr);
 }
 

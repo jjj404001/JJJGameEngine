@@ -10,6 +10,9 @@
 class ShaderCollection;
 class Mesh
 {
+	friend class Object;
+	friend class Graphics;
+
 	std::vector<Stride> vertices; // Collection of vertices position and color.
 	std::vector<unsigned int> indices; // Collection of vertices position and color.
 

@@ -1,7 +1,10 @@
 #pragma once
 #include "ShaderCollection.h"
 #include "Color.h"
-#include "Mesh.h"
+#include "Object.h"
+
+#include <list>
+#include "2DCamera.h"
 
 class Graphics
 {
@@ -13,10 +16,13 @@ class Graphics
 
 	Color clear_color_;
 
-	Mesh testMesh;
+	TwoDimensionalCamera main_camera_;
 
 
-	void Initialize();
+
+	std::list<Object> object_list_;
+
+	void Initialize(long res_x, long res_y);
 	void Update();
 	void Free() const;
 

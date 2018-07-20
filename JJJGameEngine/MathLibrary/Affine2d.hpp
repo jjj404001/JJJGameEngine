@@ -26,7 +26,7 @@ brief  :
 	   + Affine2d Build_identity(void);                               // build identity matrix.
 	   + Affine2d build_scale(float scaleFactor);                     // build uniform affine sacle matrix.
 	   + Affine2d build_scale(float scaleFactor1, float scaleFactor2);// build non uniform affine sacle matrix.
-	   + Affine2d build_affine_translation(float Xposition, float Yposition);// build translation affine matrix with given number.
+	   + Affine2d build_translation(float Xposition, float Yposition);// build translation affine matrix with given number.
   
 */
 /******************************************************************************/
@@ -76,7 +76,7 @@ struct Affine2d
 	static Affine2d build_identity();                               // build identity matrix.
 	static Affine2d build_scale(const float scale_factor);                     // build uniform affine sacle matrix.
 	static Affine2d build_scale(const float scale_factor1, const float scale_factor2);// build non uniform affine sacle matrix.
-	static Affine2d build_affine_translation(const float xposition, const float yposition);// build translation affine matrix with given number.
+	static Affine2d build_translation(const float xposition, const float yposition);// build translation affine matrix with given number.
 };
 ////////////Non member function////////////
 std::ostream& operator<<(std::ostream& input_ostream, const Affine2d input_affine);

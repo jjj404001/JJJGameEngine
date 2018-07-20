@@ -26,7 +26,7 @@ brief  :
 	   + Affine2d Build_identity(void);                               // build identity matrix.
 	   + Affine2d build_scale(float scaleFactor);                     // build uniform affine sacle matrix.
 	   + Affine2d build_scale(float scaleFactor1, float scaleFactor2);// build non uniform affine sacle matrix.
-	   + Affine2d build_affine_translation(float Xposition, float Yposition);// build translation affine matrix with given number.
+	   + Affine2d build_translation(float Xposition, float Yposition);// build translation affine matrix with given number.
   
 */
 /******************************************************************************/
@@ -225,7 +225,7 @@ Affine2d Affine2d::build_scale(float scale_factor1, float scale_factor2)
 	return scale;
 }
 
-Affine2d Affine2d::build_affine_translation(float xposition, float yposition)
+Affine2d Affine2d::build_translation(float xposition, float yposition)
 {
 	auto translation = build_identity(); //initialize translatino matrix with identity matrix.
 	
