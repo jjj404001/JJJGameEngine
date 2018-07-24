@@ -12,8 +12,9 @@ void Graphics::Initialize(long res_x, long res_y)
 	const auto version = reinterpret_cast<const char*>(glGetString(GL_VERSION));
 	std::cout << version << std::endl;
 
-
-	main_camera_.Initialize(res_x, res_y);
+	resolutionX = res_x;
+	resolutionY = res_y;
+	main_camera_.Initialize(resolutionX, resolutionY);
 
 
 	Tesselation_geometry_white_shader_.push_back(Shader::LoadShader(Shader::VertexShader, "Shader/Triangle_Vertex.glsl"));
@@ -41,11 +42,30 @@ void Graphics::Initialize(long res_x, long res_y)
 	testOBJ.GetMesh().SetShader(&Tesselation_white_shader_);
 
 	testOBJ.name = SET_INITIAL_NAME(testOBJ);
-	testOBJ.transform_.translation_ = Vector2(0.0f, 0.0f);
+	testOBJ.transform_.translation_ = Vector3(1000.0f, 0.0f, 0.0f);
+	testOBJ.transform_.scale_ = Vector3(1.0f, 1.0f, 1.0f);
 
+	Object testOBJ0;
+	testOBJ0.GetMesh().debug_triangle();
+	testOBJ0.GetMesh().Initialize_VAO_VBO();
+	testOBJ0.GetMesh().SetShader(&Tesselation_white_shader_);
+
+	testOBJ0.name = SET_INITIAL_NAME(testOBJ0);
+	testOBJ0.transform_.translation_ = Vector3(0.5f, 0.0f, 1.0f);
+	testOBJ0.transform_.scale_ = Vector3(1.0f, 1.0f, 1.0f);
+
+	Object testOBJ1;
+	testOBJ1.GetMesh().debug_triangle();
+	testOBJ1.GetMesh().Initialize_VAO_VBO();
+	testOBJ1.GetMesh().SetShader(&Tesselation_white_shader_);
+
+	testOBJ1.name = SET_INITIAL_NAME(testOBJ1);
+	testOBJ1.transform_.translation_ = Vector3(-0.5f, -0.0f, -1.0f);
+	testOBJ1.transform_.scale_ = Vector3(1.0f, 1.0f, 1.0f);
 
 
 	object_list_.push_back(testOBJ);
+
 
 	// Pixel size
 	glPointSize(5.0f);
@@ -60,9 +80,7 @@ void Graphics::Update()
 {
 	for (auto current_OBJ : object_list_)
 	{
-		std::cout << current_OBJ.name << std::endl;
-
-
+		main_camera_.Initialize(resolutionX, resolutionY);
 
 		auto T = Affine2d::build_translation(current_OBJ.transform_.translation_.value[0], current_OBJ.transform_.translation_.value[1]);
 		auto R = Affine2d::build_rotation(-current_OBJ.transform_.rotation_);
@@ -79,8 +97,15 @@ void Graphics::Update()
 		const auto uniCombined = glGetUniformLocation(current_OBJ.mesh_.GetShader().GetProgram(), "combined");
 		const auto combined = main_camera_.CombindMatrix();
 
+		for(auto vert : current_OBJ.mesh_.vertices)
+		{
+			Vector4 vect = Vector4(vert.position.x, vert.position.y, vert.position.z, 1.0f);
 
-		glUniformMatrix3fv(uniCombined, 1, GL_TRUE, &combined.value[0][0]);
+			const auto testing = combined * vect;
+		};
+
+
+		glUniformMatrix4fv(uniCombined, 1, GL_TRUE, &combined.value[0][0]);
 
 
 

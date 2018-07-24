@@ -52,6 +52,7 @@ public:
 	bool Create_Context(const Attributes input_attrib, GLWindow& fake);
 	void Destroy_Old_Context() const;
 
+	void Input_KeyDown(WPARAM wParam, LPARAM lParam);
 
 	void StartClock();
 	void EndClockAndPrintFPS();

@@ -45,9 +45,9 @@ void Mesh::Update_VAO_VBO()
 
 void Mesh::debug_triangle()
 {
-	auto bottom_right = Stride(0.25f, -0.25f, 0.5f);
-	auto bottom_left = Stride(-0.25f, -0.25f, 0.5f);
-	auto top_right = Stride(0.25f, 0.25f, 0.5f);
+	auto bottom_right = Stride(0.25f, -0.25f, 0.0f);
+	auto bottom_left = Stride(-0.25f, -0.25f, 0.0f);
+	auto top_right = Stride(0.25f, 0.25f, 0.0f);
 
 	bottom_right.color = Color(255, 0, 0, 255);
 	bottom_left.color = Color(0, 255, 0, 255);

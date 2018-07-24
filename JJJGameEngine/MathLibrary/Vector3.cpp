@@ -76,7 +76,14 @@ brief  :
 #include "Vector3.hpp"
 #include "Constant.h"
 
+Vector3& Vector3::operator=(const Vector3& InputVector)
+{
+	value[0] = InputVector.value[0];
+	value[1] = InputVector.value[1];
+	value[2] = InputVector.value[2];
 
+	return *this;
+}
 
 //+ operator overloading for Vector3.
 Vector3 Vector3::operator+(Vector3 InputVector) const

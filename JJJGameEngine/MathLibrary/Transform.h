@@ -7,19 +7,19 @@ class Transform
 	friend class Object;
 	friend class Graphics;
 
-	Vector2 translation_ = Vector2(0.0f, 0.0f);
+	Vector3 translation_ = Vector3(0.0f, 0.0f, 0.0f);
 	float rotation_   = 0.0f;
-	Vector2 scale_ = { 1.0f , 1.0f };
+	Vector3 scale_ = { 1.0f , 1.0f , 1.0f};
 
 public:
-	void SetTranslation(const Vector2 input) { translation_ = input; };
-	void SetRotation(const float input) { rotation_ = input; };
+	void SetTranslation(const Vector3 input);
+	void SetRotation(const float input);
 	
-	void SetScale(const Vector2 input) { scale_ = input; };
+	void SetScale(const Vector3 input);
 
-	Vector2 GetScale() { return scale_; };
+	Vector3 GetScale() { return scale_; };
 	float GetRotation() { return rotation_; };
-	Vector2 GetTranslation() { return translation_; };
+	Vector3 GetTranslation() { return translation_; };
 
 	Affine2d GetModelToWorld() const;
 };

@@ -79,9 +79,9 @@ brief  :
 struct Vector3
 {
 	float value[3]{0,};
-	const float& x = value[0];
-	const float& y = value[1];
-	const float& z = value[2];
+	float& x = value[0];
+	float& y = value[1];
+	float& z = value[2];
 
 	//constructor for Vector3 initialization
 	Vector3() = default;
@@ -92,6 +92,8 @@ struct Vector3
 		value[1] = InitY;
 		value[2] = InitZ;
 	}
+
+	Vector3& operator=(const Vector3& InputVector);
 
 	//addition
 

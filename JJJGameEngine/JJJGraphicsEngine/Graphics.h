@@ -5,6 +5,7 @@
 
 #include <list>
 #include "2DCamera.h"
+#include "3DCamera.h"
 
 class Graphics
 {
@@ -16,7 +17,7 @@ class Graphics
 
 	Color clear_color_;
 
-	TwoDimensionalCamera main_camera_;
+	ThreeDimensionalCamera main_camera_;
 
 
 
@@ -30,5 +31,7 @@ class Graphics
 	void CompileShaders(ShaderCollection& input_shader_collection) const;
 
 public:
+	long resolutionX;
+	long resolutionY;
 	bool Tessellation = false;
 };

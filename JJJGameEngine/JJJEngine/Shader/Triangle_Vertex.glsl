@@ -4,11 +4,11 @@ layout(location = 1) in vec4 input_color;
 
 out vec4 color_for_TC;
 
-uniform mat3 combined;
+uniform mat4 combined;
 
 void main() 
 {
-    vec3 position = combined * input_position;
-    gl_Position = vec4(position, 1.0);
+    vec4 position = combined * vec4(input_position, 1.0);
+    gl_Position = vec4(position.xyz, 1.0);
     color_for_TC = input_color;
 }

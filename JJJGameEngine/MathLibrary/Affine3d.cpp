@@ -64,6 +64,32 @@ const float* Affine3d::operator[](const int column) const
 	return value[column];
 }
 
+Affine3d Affine3d::operator+(const Affine3d input_affine) const
+{
+	Affine3d result;
+
+	result.value[0][0] = value[0][0] + input_affine[0][0];
+	result.value[0][1] = value[0][1] + input_affine[0][1];
+	result.value[0][2] = value[0][2] + input_affine[0][2];
+	result.value[1][0] = value[1][0] + input_affine[1][0];
+	result.value[1][1] = value[1][1] + input_affine[1][1];
+	result.value[1][2] = value[1][2] + input_affine[1][2];
+	result.value[2][0] = value[2][0] + input_affine[2][0];
+	result.value[2][1] = value[2][1] + input_affine[2][1];
+	result.value[2][2] = value[2][2] + input_affine[2][2];
+
+	return result;
+}
+
+Affine3d& Affine3d::operator+=(const Affine3d input_affine)
+{
+	Affine3d result(*this + input_affine);
+
+	*this = result;
+
+	return *this;
+}
+
 
 //  *operator overloading for multiplying affine matrix with affine matrix.
 Affine3d Affine3d::operator*(Affine3d input_affine) const
@@ -110,6 +136,22 @@ Affine3d& Affine3d::operator*=(Affine3d input_affine)
 {
 	*this = *this * input_affine;
 	return *this;
+}
+
+Vector4 Affine3d::operator*(const Vector4 input_affine) const
+{
+	const auto _x = (value[0][0] * input_affine.value[0] + value[1][0] * input_affine.value[1]
+			       + value[2][0] * input_affine.value[2] + value[3][0] * input_affine.value[3]);
+
+	const auto _y = (value[0][1] * input_affine.value[0] + value[1][1] * input_affine.value[1]
+				   + value[2][1] * input_affine.value[2] + value[3][1] * input_affine.value[3]);
+
+	const auto _z = (value[0][2] * input_affine.value[0] + value[1][2] * input_affine.value[1]
+			   	   + value[2][2] * input_affine.value[2] + value[3][2] * input_affine.value[3]);
+
+	const auto _w = (value[0][3] * input_affine.value[0] + value[1][3] * input_affine.value[1]
+				   + value[2][3] * input_affine.value[2] + value[3][3] * input_affine.value[3]);
+	return Vector4(_x, _y, _z, _w);
 }
 
 
@@ -242,12 +284,30 @@ Affine3d Affine3d::build_scale(float scale_factor1, float scale_factor2)
 	return scale;
 }
 
-Affine3d Affine3d::build_affine_translation(float xposition, float yposition)
+Affine3d Affine3d::build_scale(const float scale_factor1, const float scale_factor2, const float scale_factor3)
+{
+	auto scale = build_identity();
+
+
+
+	//manually build scale matrix.
+	scale(0, 0) = scale_factor1;
+	scale(1, 1) = scale_factor2;
+	scale(2, 2) = scale_factor3;
+
+
+
+	//return builded scale matrix.
+	return scale;
+}
+
+Affine3d Affine3d::build_translation(const float xposition, const float yposition, const float zposition)
 {
 	auto translation = build_identity(); //initialize translatino matrix with identity matrix.
 
 	translation[0][2] = xposition;
 	translation[1][2] = yposition;
+	translation[2][2] = zposition;
 
 
 	//return builded translation matrix.

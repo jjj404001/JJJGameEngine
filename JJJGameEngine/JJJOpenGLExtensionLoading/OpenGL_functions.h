@@ -33,6 +33,7 @@
 	extern PFNGLGETSHADERINFOLOGPROC glGetShaderInfoLog;
 	extern PFNGLGETUNIFORMLOCATIONPROC glGetUniformLocation;
 	extern PFNGLUNIFORMMATRIX3FVPROC glUniformMatrix3fv;
+	extern PFNGLUNIFORMMATRIX4FVPROC glUniformMatrix4fv;
 	// GL vertex arrays
 	extern PFNGLGENVERTEXARRAYSPROC glGenVertexArrays;
 	extern PFNGLBINDVERTEXARRAYPROC glBindVertexArray;

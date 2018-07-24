@@ -120,6 +120,43 @@ void GLWindow::Destroy_Old_Context() const
 	DestroyWindow(hWnd_);
 }
 
+void GLWindow::Input_KeyDown(WPARAM wParam, LPARAM lParam)
+{
+	WINDOWINFO test;
+	test.cbSize = sizeof(WINDOWINFO);
+	GetWindowInfo(hWnd_, &test);
+
+	switch (wParam)
+	{
+		case VK_ESCAPE:
+			SendMessage(hWnd_, WM_CLOSE, wParam, lParam);break;
+		case 'W':
+			std::cout << "W";
+			graphics_.main_camera_.center_.y += 0.01f;
+			break;
+		case 'A':
+			std::cout << "A";
+			graphics_.main_camera_.center_.x -= 0.01f;
+			break;
+		case 'S':
+			std::cout << "S";
+			graphics_.main_camera_.center_.y -= 0.01f;
+			break;
+		case 'D':
+			std::cout << "D";
+			graphics_.main_camera_.center_.x += 0.01f;
+			break;
+		case VK_UP:
+			std::cout << "UP";
+			graphics_.main_camera_.center_.z += 0.01f;
+			break;
+		case VK_DOWN:
+			std::cout << "DOWN";
+			graphics_.main_camera_.center_.z -= 0.01f;
+			break;
+	}
+}
+
 void GLWindow::StartClock()
 {
 	timer.Clock_Start();
@@ -228,25 +265,4 @@ void GLWindow::ResizeOpenGLViewport() const
 	// deprecated in 4.0 : glMatrixMode(GL_PROJECTION);
 }
 
-LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
-{
-	PAINTSTRUCT ps;
-	switch (msg)
-	{
-		case WM_PAINT:
-			BeginPaint(hWnd, &ps);
-			EndPaint(hWnd, &ps);
-			break;
-		case WM_CLOSE:
-			PostQuitMessage(0);
-			return 0;
-		case WM_SIZE:
-			break;
-		case WM_DESTROY: //if mouse is moved.
-			break;
-		default:
-			return DefWindowProc(hWnd, msg, wParam, lParam);
-	}
 
-	return 0;
-}

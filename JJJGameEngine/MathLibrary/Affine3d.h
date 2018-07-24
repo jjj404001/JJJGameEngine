@@ -71,11 +71,18 @@ struct Affine3d
 	float* operator[](const int column);
 	const float* operator[](const int column) const;
 
+	Affine3d operator+(const Affine3d input_affine) const;
+	Affine3d& operator+=(const Affine3d input_affine);
 
 	Affine3d operator*(const Affine3d input_affine) const;
 	//*operator overloading for multiplying affine matrix with affine matrix.
 	Affine3d& operator*=(const Affine3d input_affine);
 	//*= operator overloading for multyplying affine matrix with affine matrix.
+
+
+	Vector4 operator*(const Vector4 input_affine) const;
+
+
 
 	Affine3d& transpose(); // transpose given affine matrix.
 
@@ -86,8 +93,9 @@ struct Affine3d
 	static Affine3d build_identity(); // build identity matrix.
 	static Affine3d build_scale(const float scale_factor); // build uniform affine sacle matrix.
 	static Affine3d build_scale(const float scale_factor1, const float scale_factor2);
+	static Affine3d build_scale(const float scale_factor1, const float scale_factor2, const float scale_factor3);
 	// build non uniform affine sacle matrix.
-	static Affine3d build_affine_translation(const float xposition, const float yposition);
+	static Affine3d build_translation(const float xposition, const float yposition, const float zposition);
 	// build translation affine matrix with given number.
 };
 
