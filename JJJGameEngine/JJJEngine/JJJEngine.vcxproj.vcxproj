@@ -140,9 +140,6 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GLMtest\GLMtest.vcxproj">
-      <Project>{de288b37-8625-4511-bae5-d5b45bec2951}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\JJJGraphicsEngine\JJJGraphicsEngine.vcxproj">
       <Project>{7d9f6967-2fd3-46d2-958a-b5a3802358a0}</Project>
     </ProjectReference>

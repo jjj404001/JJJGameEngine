@@ -9,7 +9,7 @@ class TwoDimensionalCamera : public Camera
 	Vector3 up_;
 
 
-
 public:
+	float distance = 0.1f;
 	void Initialize(long res_x, long res_y);
 };

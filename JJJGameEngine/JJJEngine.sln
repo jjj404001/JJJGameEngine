@@ -13,8 +13,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JJJShaderMap", "JJJShaderMa
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JJJEngine", "JJJEngine\JJJEngine.vcxproj.vcxproj", "{B574FA38-3758-4BBB-BBB7-30DED5CC436A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLMtest", "GLMtest\GLMtest.vcxproj", "{DE288B37-8625-4511-BAE5-D5B45BEC2951}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -63,14 +61,6 @@ Global
 		{B574FA38-3758-4BBB-BBB7-30DED5CC436A}.Release|x64.Build.0 = Release|x64
 		{B574FA38-3758-4BBB-BBB7-30DED5CC436A}.Release|x86.ActiveCfg = Release|Win32
 		{B574FA38-3758-4BBB-BBB7-30DED5CC436A}.Release|x86.Build.0 = Release|Win32
-		{DE288B37-8625-4511-BAE5-D5B45BEC2951}.Debug|x64.ActiveCfg = Debug|x64
-		{DE288B37-8625-4511-BAE5-D5B45BEC2951}.Debug|x64.Build.0 = Debug|x64
-		{DE288B37-8625-4511-BAE5-D5B45BEC2951}.Debug|x86.ActiveCfg = Debug|Win32
-		{DE288B37-8625-4511-BAE5-D5B45BEC2951}.Debug|x86.Build.0 = Debug|Win32
-		{DE288B37-8625-4511-BAE5-D5B45BEC2951}.Release|x64.ActiveCfg = Release|x64
-		{DE288B37-8625-4511-BAE5-D5B45BEC2951}.Release|x64.Build.0 = Release|x64
-		{DE288B37-8625-4511-BAE5-D5B45BEC2951}.Release|x86.ActiveCfg = Release|Win32
-		{DE288B37-8625-4511-BAE5-D5B45BEC2951}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

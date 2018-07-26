@@ -6,6 +6,7 @@
 
 #include "OpenGL_functions.h"
 
+
 // Prototype
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 void GLWindow::Register_OpenGL_Class(bool is_fake)
@@ -132,27 +133,27 @@ void GLWindow::Input_KeyDown(WPARAM wParam, LPARAM lParam)
 			SendMessage(hWnd_, WM_CLOSE, wParam, lParam);break;
 		case 'W':
 			std::cout << "W";
-			graphics_.main_camera_.center_.y += 0.01f;
+			graphics_.main_camera_.center_.y -= graphics_.main_camera_.distance;
 			break;
 		case 'A':
 			std::cout << "A";
-			graphics_.main_camera_.center_.x -= 0.01f;
+			graphics_.main_camera_.center_.x -= graphics_.main_camera_.distance;
 			break;
 		case 'S':
 			std::cout << "S";
-			graphics_.main_camera_.center_.y -= 0.01f;
+			graphics_.main_camera_.center_.y += graphics_.main_camera_.distance;
 			break;
 		case 'D':
 			std::cout << "D";
-			graphics_.main_camera_.center_.x += 0.01f;
+			graphics_.main_camera_.center_.x += graphics_.main_camera_.distance;
 			break;
 		case VK_UP:
 			std::cout << "UP";
-			graphics_.main_camera_.center_.z += 0.01f;
+			graphics_.main_camera_.center_.z += graphics_.main_camera_.distance;
 			break;
 		case VK_DOWN:
 			std::cout << "DOWN";
-			graphics_.main_camera_.center_.z -= 0.01f;
+			graphics_.main_camera_.center_.z -= graphics_.main_camera_.distance;
 			break;
 	}
 }

@@ -38,11 +38,6 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Stride.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GLMtest\GLMtest.vcxproj">
-      <Project>{de288b37-8625-4511-bae5-d5b45bec2951}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{7D9F6967-2FD3-46D2-958A-B5A3802358A0}</ProjectGuid>

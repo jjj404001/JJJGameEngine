@@ -2,6 +2,8 @@
 #include <iostream>
 #include <cassert>
 #include "Camera.h"
+
+
 #define SET_INITIAL_NAME(Variable) (#Variable)
 
 void Graphics::Initialize(long res_x, long res_y)
@@ -42,8 +44,8 @@ void Graphics::Initialize(long res_x, long res_y)
 	testOBJ.GetMesh().SetShader(&Tesselation_white_shader_);
 
 	testOBJ.name = SET_INITIAL_NAME(testOBJ);
-	testOBJ.transform_.translation_ = Vector3(1000.0f, 0.0f, 0.0f);
-	testOBJ.transform_.scale_ = Vector3(1.0f, 1.0f, 1.0f);
+	testOBJ.transform_.translation_ = Vector3(0.0f, 0.0f, 0.0f);
+	testOBJ.transform_.scale_ = Vector3(10.0f, 10.0f, 10.0f);
 
 	Object testOBJ0;
 	testOBJ0.GetMesh().debug_triangle();
@@ -51,8 +53,8 @@ void Graphics::Initialize(long res_x, long res_y)
 	testOBJ0.GetMesh().SetShader(&Tesselation_white_shader_);
 
 	testOBJ0.name = SET_INITIAL_NAME(testOBJ0);
-	testOBJ0.transform_.translation_ = Vector3(0.5f, 0.0f, 1.0f);
-	testOBJ0.transform_.scale_ = Vector3(1.0f, 1.0f, 1.0f);
+	testOBJ0.transform_.translation_ = Vector3(-0.5f, 0.0f, 1.0f);
+	testOBJ0.transform_.scale_ = Vector3(10.0f, 10.0f, 10.0f);
 
 	Object testOBJ1;
 	testOBJ1.GetMesh().debug_triangle();
@@ -60,11 +62,13 @@ void Graphics::Initialize(long res_x, long res_y)
 	testOBJ1.GetMesh().SetShader(&Tesselation_white_shader_);
 
 	testOBJ1.name = SET_INITIAL_NAME(testOBJ1);
-	testOBJ1.transform_.translation_ = Vector3(-0.5f, -0.0f, -1.0f);
-	testOBJ1.transform_.scale_ = Vector3(1.0f, 1.0f, 1.0f);
+	testOBJ1.transform_.translation_ = Vector3(0.5f, 0.0f, 0.5f);
+	testOBJ1.transform_.scale_ = Vector3(10.0f, 10.0f, 10.0f);
 
 
 	object_list_.push_back(testOBJ);
+	object_list_.push_back(testOBJ0);
+	object_list_.push_back(testOBJ1);
 
 
 	// Pixel size
@@ -82,14 +86,13 @@ void Graphics::Update()
 	{
 		main_camera_.Initialize(resolutionX, resolutionY);
 
-		auto T = Affine2d::build_translation(current_OBJ.transform_.translation_.value[0], current_OBJ.transform_.translation_.value[1]);
-		auto R = Affine2d::build_rotation(-current_OBJ.transform_.rotation_);
-		auto S = Affine2d::build_scale(current_OBJ.transform_.scale_.value[0], current_OBJ.transform_.scale_.value[1]);
+		auto T = Affine3d::build_translation(current_OBJ.transform_.translation_.value[0], current_OBJ.transform_.translation_.value[1], current_OBJ.transform_.translation_.value[2]);
+		auto R = Affine3d::build_rotation(-current_OBJ.transform_.rotation_);
+		auto S = Affine3d::build_scale(current_OBJ.transform_.scale_.value[0], current_OBJ.transform_.scale_.value[1], current_OBJ.transform_.scale_.value[2]);
 
 
 		// Use this order because we transpose.
 		main_camera_.SetWorld(T, R, S);
-
 
 
 
@@ -105,7 +108,7 @@ void Graphics::Update()
 		};
 
 
-		glUniformMatrix4fv(uniCombined, 1, GL_TRUE, &combined.value[0][0]);
+		glUniformMatrix4fv(uniCombined, 1, GL_FALSE, &combined.value[0][0]);
 
 
 

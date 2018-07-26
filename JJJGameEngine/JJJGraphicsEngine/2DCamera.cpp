@@ -15,8 +15,8 @@ void TwoDimensionalCamera::Initialize(long res_x, long res_y)
 	view_.value[1][0] = up_.x;
 	view_.value[1][1] = up_.y;
 	// translation to opposite direction, to make it to 0.
-	view_.value[0][2] = right_ * -center_;
-	view_.value[1][2] = up_    * -center_;
+	view_.value[0][3] = right_ * -center_;
+	view_.value[1][3] = up_    * -center_;
 	
 	view_ *= Affine3d::build_rotation(rotation_);
 }

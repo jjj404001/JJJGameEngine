@@ -305,9 +305,9 @@ Affine3d Affine3d::build_translation(const float xposition, const float ypositio
 {
 	auto translation = build_identity(); //initialize translatino matrix with identity matrix.
 
-	translation[0][2] = xposition;
-	translation[1][2] = yposition;
-	translation[2][2] = zposition;
+	translation.value[0][3] = xposition;
+	translation.value[1][3] = yposition;
+	translation.value[2][3] = zposition;
 
 
 	//return builded translation matrix.

@@ -22,6 +22,8 @@ class ThreeDimensionalCamera : public Camera
 	Vector3 up_ = Vector3(0.f, 1.f, 0.f);   // up local camera vector.
 
 public:
+	float distance = 0.00001f;
+
 	void Initialize(long res_x, long res_y);
 
 	Affine3d perspective(float fovy, float aspect, float zNear, float zFar);

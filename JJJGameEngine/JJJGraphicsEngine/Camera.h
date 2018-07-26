@@ -3,6 +3,8 @@
 #include "Affine2d.hpp"
 #include "Quaternion.h"
 
+#define CAMERA_MOVING_DISTANCE 0.00001f
+
 #define X_AXIS Vector3(1.f, 0.f, 0.f)
 #define Y_AXIS Vector3(0.f, 1.f, 0.f)
 #define Z_AXIS Vector3(0.f, 0.f, 1.f)
@@ -27,7 +29,10 @@ public:
 	Vector3 center_ = Vector3(0.f, 0.f, 0.f);
 	float zoom_ = 1.0f;
 
+	
+
 	virtual void Initialize(long res_x, long res_y) = 0;
 	Affine3d CombindMatrix();
 	void SetWorld(Affine2d Translation, Affine2d Rotation, Affine2d Scale);
+	void SetWorld(Affine3d Translation, Affine3d Rotation, Affine3d Scale);
 };
