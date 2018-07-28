@@ -39,6 +39,7 @@ public:
 	void Update_VAO_VBO();
 
 	void debug_triangle();
+	void Debug_Cube();
 
 	GLenum Get_Primitive();
 	GLsizei Get_NumOfVertices();

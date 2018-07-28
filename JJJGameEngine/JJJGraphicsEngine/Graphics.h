@@ -17,7 +17,7 @@ class Graphics
 
 	Color clear_color_;
 
-	ThreeDimensionalCamera main_camera_;
+	TwoDimensionalCamera main_camera_;
 
 
 

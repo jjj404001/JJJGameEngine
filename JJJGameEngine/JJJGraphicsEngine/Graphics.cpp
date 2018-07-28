@@ -39,42 +39,22 @@ void Graphics::Initialize(long res_x, long res_y)
 	CompileShaders(vertex_fragment_);
 
 	Object testOBJ;
-	testOBJ.GetMesh().debug_triangle();
+	testOBJ.GetMesh().Debug_Cube();
 	testOBJ.GetMesh().Initialize_VAO_VBO();
-	testOBJ.GetMesh().SetShader(&Tesselation_white_shader_);
+	testOBJ.GetMesh().SetShader(&vertex_fragment_);
 
 	testOBJ.name = SET_INITIAL_NAME(testOBJ);
 	testOBJ.transform_.translation_ = Vector3(0.0f, 0.0f, 0.0f);
-	testOBJ.transform_.scale_ = Vector3(10.0f, 10.0f, 10.0f);
-
-	Object testOBJ0;
-	testOBJ0.GetMesh().debug_triangle();
-	testOBJ0.GetMesh().Initialize_VAO_VBO();
-	testOBJ0.GetMesh().SetShader(&Tesselation_white_shader_);
-
-	testOBJ0.name = SET_INITIAL_NAME(testOBJ0);
-	testOBJ0.transform_.translation_ = Vector3(-0.5f, 0.0f, 1.0f);
-	testOBJ0.transform_.scale_ = Vector3(10.0f, 10.0f, 10.0f);
-
-	Object testOBJ1;
-	testOBJ1.GetMesh().debug_triangle();
-	testOBJ1.GetMesh().Initialize_VAO_VBO();
-	testOBJ1.GetMesh().SetShader(&Tesselation_white_shader_);
-
-	testOBJ1.name = SET_INITIAL_NAME(testOBJ1);
-	testOBJ1.transform_.translation_ = Vector3(0.5f, 0.0f, 0.5f);
-	testOBJ1.transform_.scale_ = Vector3(10.0f, 10.0f, 10.0f);
+	testOBJ.transform_.scale_ = Vector3(100.0f, 100.0f, 10.0f);
 
 
 	object_list_.push_back(testOBJ);
-	object_list_.push_back(testOBJ0);
-	object_list_.push_back(testOBJ1);
 
 
 	// Pixel size
 	glPointSize(5.0f);
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
 
 	// Set shader program
 	glUseProgram(testOBJ.GetMesh().GetShader().GetProgram());

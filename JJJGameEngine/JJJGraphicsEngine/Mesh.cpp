@@ -69,7 +69,78 @@ void Mesh::debug_triangle()
 	number_of_vertex_ = 3;
 }
 
+void Mesh::Debug_Cube()
+{
+	auto bottom_left0 = Stride(-0.5f, -0.5f, -0.5f);
+	auto bottom_right0 = Stride(0.5f, -0.5f, -0.5);
+	auto top_right0 = Stride(0.5f, 0.5f, -0.5f);
+	auto top_left0 = Stride(0.5f, 0.5f, -0.5f);
 
+	bottom_left0.color = Color(255, 0, 0, 255);
+	bottom_right0.color = Color(0, 255, 0, 255);
+	top_right0.color = Color(0, 0, 255, 255);
+	top_left0.color = Color(0, 0, 255, 255);
+
+
+	vertices.push_back(bottom_left0);
+	vertices.push_back(bottom_left0);
+	vertices.push_back(bottom_left0);
+
+	indices.push_back(0);
+	indices.push_back(1);
+	indices.push_back(2);
+	indices.push_back(2);
+	indices.push_back(3);
+	indices.push_back(0);
+
+	
+	/*
+		-0.5f, -0.5f, -0.5f
+		0.5f, -0.5f, -0.5
+		0.5f, 0.5f, -0.5f
+		0.5f, 0.5f, -0.5f
+		-0.5f, 0.5f, -0.5f
+		-0.5f, -0.5f, -0.5f
+
+		-0.5f, -0.5f, 0.5f
+		0.5f, -0.5f, 0.5f,
+		0.5f, 0.5f, 0.5f
+		0.5f, 0.5f, 0.5f,
+		-0.5f, 0.5f, 0.5f
+		-0.5f, -0.5f, 0.5f,
+
+		-0.5f, 0.5f, 0.5f,
+		-0.5f, 0.5f, -0.5f,
+		-0.5f, -0.5f, -0.5f
+		-0.5f, -0.5f, -0.5f,
+		-0.5f, -0.5f, 0.5f,
+		-0.5f, 0.5f, 0.5f,
+
+		0.5f, 0.5f, 0.5f, 
+		0.5f, 0.5f, -0.5f, 
+		0.5f, -0.5f, -0.5f, 
+		0.5f, -0.5f, -0.5f, 
+		0.5f, -0.5f, 0.5f, 
+		0.5f, 0.5f, 0.5f, 
+
+		-0.5f, -0.5f, -0.5f, 
+		0.5f, -0.5f, -0.5f,
+		0.5f, -0.5f, 0.5f, 
+		0.5f, -0.5f, 0.5f, 
+		-0.5f, -0.5f, 0.5f, 
+		-0.5f, -0.5f, -0.5f, 
+
+		-0.5f, 0.5f, -0.5f,
+		0.5f, 0.5f, -0.5f,
+		0.5f, 0.5f, 0.5f, 
+		0.5f, 0.5f, 0.5f, 
+		-0.5f, 0.5f, 0.5f, 
+		-0.5f, 0.5f, -0.5f, 
+	*/
+
+	primitive_ = GL_TRIANGLES;
+	number_of_vertex_ = 6;
+}
 
 
 GLenum Mesh::Get_Primitive()
