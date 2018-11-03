@@ -15,10 +15,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Transform.cpp">
+    <ClCompile Include="Affine2d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Affine3d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Matrix2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Quaternion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Vector2.cpp">
@@ -27,24 +36,27 @@
     <ClCompile Include="Vector3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Affine2d.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Affine3d.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Vector4.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Quaternion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Transform.h">
+    <ClInclude Include="Affine2d.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Affine3d.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Constant.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Matrix2.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Quaternion.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Vector2.hpp">
@@ -53,19 +65,7 @@
     <ClInclude Include="Vector3.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Affine2d.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Constant.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Affine3d.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Vector4.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Quaternion.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

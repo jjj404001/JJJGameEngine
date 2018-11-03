@@ -1,6 +1,7 @@
 #pragma once
 #include <Windows.h>
-#include "Graphics.h"
+#include <Graphics/Graphics.h>
+#include "Attributes.h"
 #include "Timer.h"
 
 #define CLASS_NAME "JJJsEngine"
@@ -66,5 +67,4 @@ public:
 	void ResizeOpenGLViewport() const;
 
 	HWND& GetHWND() { return hWnd_; }
-	OpenGLFunctions& GetFunctions() { return graphics_.opengl_functions_; }
 };
