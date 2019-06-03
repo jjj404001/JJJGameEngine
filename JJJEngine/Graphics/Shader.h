@@ -14,7 +14,7 @@ class Shader
 
 	friend class Graphics;
 	using GLuint = unsigned int;
-	const char* shader_source_ = nullptr;
+	std::string shader_source_;
 
 
 	GLuint shader_ = 0;
@@ -24,6 +24,6 @@ public:
 	ShaderType type = VertexShader;
 
 	Shader();
-	Shader(ShaderType input_type, const char* input_shader_source);
+	Shader(ShaderType input_type, std::string input_shader_source);
 	static Shader LoadShader(ShaderType input_type, std::string file_path);
 };

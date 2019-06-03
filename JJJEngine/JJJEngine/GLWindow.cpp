@@ -193,10 +193,7 @@ void GLWindow::Update()
 
 void GLWindow::Render()
 {
-	//graphic.SetPolyMode(GL_LINE);
-	//glPolygonMode(GL_FRONT_AND_BACK, graphic.GetPolyMode());
-	
-	GLfloat red[] = { 1.0f, 0.0f, 0.0f, 1.0f};
+	GLfloat red[] = { 0.0f, 0.7f, 0.0f, 1.0f};
 	glClearBufferfv(GL_COLOR, 0, red);
 
 
@@ -204,7 +201,6 @@ void GLWindow::Render()
 
 
 	SwapBuffers(device_context_);
-	
 }
 
 void GLWindow::Close()

@@ -9,6 +9,7 @@ class Graphics
 	friend class GLWindow;
 
 	ShaderCollection Tesselation_geometry_white_shader_;
+	ShaderCollection Simple_triangle;
 
 	Color clear_color_;
 

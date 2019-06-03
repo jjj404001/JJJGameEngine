@@ -2,9 +2,41 @@
 #include <iostream>
 #include <cassert>
 
+GLuint VAO;
+GLuint VBO0;
+GLuint VBO1;
+GLuint EBO;
+
+
+struct Stride
+{
+	float x;
+	float y;
+	float z;
+};
+
+
+constexpr float tri_vert[9] = 
+{
+	0.0f, 0.5f, 0.0f,
+	-0.5f, 0.0f, 0.0f,
+	0.5f, 0.0f, 0.0f
+};
+
+constexpr float tri_vert1[9] =
+{
+	0.5f, 0.5f, 0.0f,
+	0.0f, 0.0f, 0.0f,
+	1.0f, 0.0f, 0.0f
+};
+
+constexpr unsigned int tri_endices[3] =
+{
+	0,1,2
+};
+
 void Graphics::Initialize()
 {
-	
 	wglSwapIntervalEXT(true);
 
 
@@ -19,24 +51,55 @@ void Graphics::Initialize()
 	Tesselation_geometry_white_shader_.push_back(Shader::LoadShader(Shader::FragmentShader, "Shader/Triangle_Fragment.glsl"));
 	CompileShaders(Tesselation_geometry_white_shader_);
 
-	GLuint VAO;
+
+	Simple_triangle.push_back(Shader::LoadShader(Shader::VertexShader, "Shader/Triangle_Vertex.glsl"));
+	Simple_triangle.push_back(Shader::LoadShader(Shader::FragmentShader, "Shader/Triangle_Fragment.glsl"));
+
+
 	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO0);
+	glGenBuffers(1, &VBO1);
+
+	glGenBuffers(1, &EBO);
+
+
 	glBindVertexArray(VAO);
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	
 
-	// Pixel size
-	glPointSize(5.0f);
+	// VBO
+	glBindBuffer(GL_ARRAY_BUFFER, VBO0);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 9, &tri_vert[0], GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO1);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 9, &tri_vert1[0], GL_STATIC_DRAW);
+
+	// EBO
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * 3, &tri_endices[0], GL_STATIC_DRAW);
+
+	
+	// VAO
+	// Position
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, reinterpret_cast<void *>(0));
 }
 
 void Graphics::Update()
 {
-	glUseProgram(Tesselation_geometry_white_shader_.GetProgram());
-
 	//for tessellation
-	glDrawArrays(GL_PATCHES, 0, 3);
+	//glUseProgram(Tesselation_geometry_white_shader_.GetProgram());
+	//glDrawArrays(GL_PATCHES, 0, 3);
+
+
+
+
+
+
 	//for triangle
-	//glDrawArrays(GL_TRIANGLES, 0, 3);
+	glUseProgram(Simple_triangle.GetProgram());
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 }
 
 void Graphics::Free() const
@@ -72,7 +135,7 @@ void Graphics::CompileShaders(ShaderCollection& input_shader_collection) const
 				assert(!"Undefined shader type");
 		}
 
-		const GLchar* shader_source[] = { current_shader.shader_source_ };
+		const GLchar* shader_source[] = { current_shader.shader_source_.c_str() };
 
 		glShaderSource(current_shader.shader_, 1, shader_source, nullptr);
 		glCompileShader(current_shader.shader_);

@@ -27,10 +27,9 @@ bool Shader::CheckValidate(char input_char)
 Shader::Shader()
 {
 	type = VertexShader;
-	shader_source_ = nullptr;
 }
 
-Shader::Shader(const ShaderType input_type, const char* input_shader_source)
+Shader::Shader(const ShaderType input_type, std::string input_shader_source)
 {
 	type = input_type;
 	shader_source_ = input_shader_source;
@@ -61,10 +60,16 @@ Shader Shader::LoadShader(const ShaderType input_type, const std::string file_pa
 	std::cout << "Reading " << length << " characters" << std::endl;
 	std::cout << "For " << file_path << " shader file." << std::endl;
 	// read data as a block:
-	auto* buffer = new char[length];
-	infile.read(buffer, length);
-	CleanInput(buffer, length);
+	std::string input;
+
+	while (infile)
+	{
+		std::string buffer;
+		std::getline(infile, buffer);
+		input += buffer + '\n';
+	}
+		
 
 
-	return  Shader(input_type,buffer);
+	return  Shader(input_type, input);
 }
