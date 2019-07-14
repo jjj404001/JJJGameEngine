@@ -1,6 +1,6 @@
 #pragma once
 #include <Windows.h>
-#include <Graphics/Graphics.h>
+#include <Graphics/Renderer.h>
 #include "Attributes.h"
 #include "Timer.h"
 
@@ -28,8 +28,7 @@ class GLWindow
 	UINT numFormats_ = 0;
 
 	Timer timer;
-
-	Graphics graphics_;
+	Renderer graphics_;
 
 
 	

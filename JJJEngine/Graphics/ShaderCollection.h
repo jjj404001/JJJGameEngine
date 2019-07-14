@@ -4,7 +4,7 @@
 
 class ShaderCollection
 {
-	friend class Graphics;
+	friend class Renderer;
 
 	using GLuint = unsigned int;
 
@@ -24,5 +24,5 @@ public:
 	size_t Size() const;
 	void push_back(Shader input_shader);
 
-	GLuint GetProgram() const;
+	GLuint const& GetProgram() const;
 };

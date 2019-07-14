@@ -83,7 +83,7 @@ void ShaderCollection::push_back(Shader input_shader)
 	shader_map_[previous_length] = input_shader;
 }
 
-ShaderCollection::GLuint ShaderCollection::GetProgram() const
+ShaderCollection::GLuint const& ShaderCollection::GetProgram() const
 {
 	return program_;
 }

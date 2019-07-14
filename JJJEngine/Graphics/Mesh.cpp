@@ -17,9 +17,9 @@ Mesh::~Mesh()
 
 void Mesh::ObjectsSetting()
 {
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_BLEND);
-
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glEnable(GL_BLEND);
+	
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
 	glGenBuffers(1, &EBO);
@@ -83,22 +83,6 @@ void Mesh::Initialize_VAO_VBO()
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Stride),
 		reinterpret_cast<void *>(sizeof(Position) + sizeof(Color)));
-
-
-#ifdef _DEBUG
-	//glGenVertexArrays(1, &polyVAO);
-	//glGenBuffers(1, &polyVBO);
-
-	//glBindVertexArray(polyVAO);
-	//// VBO
-	//glBindBuffer(GL_ARRAY_BUFFER, polyVBO);
-	//glBufferData(GL_ARRAY_BUFFER, Buffer_Size(), &poly_vertices[0], GL_STATIC_DRAW);
-
-	//// VAO
-	//// Position
-	//glEnableVertexAttribArray(0);
-	//glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(glm::vec2), reinterpret_cast<void *>(0));
-#endif
 }
 
 
@@ -212,12 +196,6 @@ void Mesh::Square(float x, float y, int vertice_num)
 	primitive_ = GL_TRIANGLES;
 	number_of_vertex_ = 6;
 }
-
-GLsizei Mesh::Get_NumOfVertices()
-{
-	return GLsizei();
-}
-
 
 void Mesh::Debug_Cube()
 {

@@ -12,7 +12,7 @@ class Shader
 		FragmentShader,
 	};
 
-	friend class Graphics;
+	friend class Renderer;
 	using GLuint = unsigned int;
 	std::string shader_source_;
 

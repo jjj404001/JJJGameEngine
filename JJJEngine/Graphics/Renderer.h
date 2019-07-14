@@ -1,10 +1,11 @@
 #pragma once
+#include <vector>
 #include <OpenGL/OpenGL_functions.h>
 #include "ShaderCollection.h"
 #include "Color.h"
+#include "Mesh.h"
 
-
-class Graphics
+class Renderer
 {
 	friend class GLWindow;
 
@@ -16,7 +17,6 @@ class Graphics
 	void Initialize();
 	void Update();
 	void Free() const;
-
 
 	void CompileShaders(ShaderCollection& input_shader_collection) const;
 };

@@ -5,7 +5,7 @@
 class Transform
 {
 	friend class Object;
-	friend class Graphics;
+	friend class Renderer;
 
 	Vector2 translation_ = Vector2(0.0f, 0.0f);
 	float rotation_   = 0.0f;

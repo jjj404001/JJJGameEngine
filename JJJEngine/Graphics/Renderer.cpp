@@ -1,41 +1,9 @@
-#include "Graphics.h"
+#include "Renderer.h"
 #include <iostream>
 #include <cassert>
 
-GLuint VAO;
-GLuint VBO0;
-GLuint VBO1;
-GLuint EBO;
 
-
-struct Stride
-{
-	float x;
-	float y;
-	float z;
-};
-
-
-constexpr float tri_vert[9] = 
-{
-	0.0f, 0.5f, 0.0f,
-	-0.5f, 0.0f, 0.0f,
-	0.5f, 0.0f, 0.0f
-};
-
-constexpr float tri_vert1[9] =
-{
-	0.5f, 0.5f, 0.0f,
-	0.0f, 0.0f, 0.0f,
-	1.0f, 0.0f, 0.0f
-};
-
-constexpr unsigned int tri_endices[3] =
-{
-	0,1,2
-};
-
-void Graphics::Initialize()
+void Renderer::Initialize()
 {
 	wglSwapIntervalEXT(true);
 
@@ -56,6 +24,10 @@ void Graphics::Initialize()
 	Simple_triangle.push_back(Shader::LoadShader(Shader::FragmentShader, "Shader/Triangle_Fragment.glsl"));
 
 
+	
+
+
+	/*
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO0);
 	glGenBuffers(1, &VBO1);
@@ -83,31 +55,28 @@ void Graphics::Initialize()
 	// Position
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, reinterpret_cast<void *>(0));
+	*/
 }
 
-void Graphics::Update()
+void Renderer::Update()
 {
-	//for tessellation
-	//glUseProgram(Tesselation_geometry_white_shader_.GetProgram());
-	//glDrawArrays(GL_PATCHES, 0, 3);
+	Mesh mesh = Mesh(Vector2(0.4f, 0.4f));
 
-
-
-
-
-
-	//for triangle
 	glUseProgram(Simple_triangle.GetProgram());
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+	glBindVertexArray(mesh.GetVAO());
+	
+	glDrawElements(mesh.GetPrimitive(), mesh.GetNumOfVertices(), GL_UNSIGNED_INT, NULL);
 }
 
-void Graphics::Free() const
+
+
+void Renderer::Free() const
 {
 	glDeleteShader(Tesselation_geometry_white_shader_.GetProgram());
+	glDeleteShader(Simple_triangle.GetProgram());
 }
 
-void Graphics::CompileShaders(ShaderCollection& input_shader_collection) const
+void Renderer::CompileShaders(ShaderCollection& input_shader_collection) const
 {
 	// Create program.
 	input_shader_collection.program_ = glCreateProgram();
